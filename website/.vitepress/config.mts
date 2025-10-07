@@ -86,8 +86,9 @@ export default defineConfig({
       { text: "About", link: "/about" },
       { text: "Datasets", link: "/fullscreen" },
       {
-        text: "Package Docs",
+        text: "Package",
         link: "/docs/",
+        target: "_blank",
       },
     ],
 
