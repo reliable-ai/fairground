@@ -47,11 +47,6 @@ jobs:
           cd website
           npm ci
 
-      - name: Generate website data
-        run: |
-          cd website
-          npm run generate:data
-
       - name: Build MkDocs documentation
         run: mkdocs build --site-dir _site/docs
 
