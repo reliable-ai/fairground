@@ -1,11 +1,11 @@
+<p align="center">
+  <img alt="faiground logo" src="https://raw.githubusercontent.com/reliable-ai/fairground/main/docs/assets/fairground-logo-bg.png" width="40%" align="center">
+</p>
+
 # FairML Datasets
 
 [![PyPI](https://img.shields.io/pypi/v/fairml-datasets.svg)](https://pypi.org/project/fairml-datasets/)
 [![Tests](https://github.com/reliable-ai/fairground/actions/workflows/tests.yml/badge.svg)](https://github.com/reliable-ai/fairground/actions/workflows/tests.yml)
-
-<p align="center">
-  <img alt="faiground logo" src="https://raw.githubusercontent.com/reliable-ai/fairground/main/docs/assets/fairground-logo-bg.png" width="40%" align="center">
-</p>
 
 A comprehensive Python package for loading, processing, and working with datasets used in fair classification.
 
