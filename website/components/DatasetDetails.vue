@@ -28,7 +28,7 @@ const relatedDatasets = computed(() => {
 });
 
 const pythonExample = computed(() => {
-  return `from fairml_datasets import Dataset
+  return `from fairground import Dataset
 
 # Get the dataset
 dataset = Dataset.from_id("${props.id}") # [!code highlight]
@@ -141,7 +141,7 @@ const handleCodeCopy = () => {
 
       <div class="dataset-section">
         <h2>Python Code Example</h2>
-        <p>Use the following code to load this dataset with the fairml_datasets library:</p>
+        <p>Use the following code to load this dataset with the fairground library:</p>
         <HighlightedCode
           :code="pythonExample"
           language="python"

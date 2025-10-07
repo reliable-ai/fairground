@@ -4,30 +4,30 @@ The `collections` module provides predefined collections of fairness scenarios, 
 
 ## Prespecified Collections
 
-::: fairml_datasets.collections.Corpus
+::: fairground.collections.Corpus
 
-::: fairml_datasets.collections.DecorrelatedSmall
+::: fairground.collections.DecorrelatedSmall
 
-::: fairml_datasets.collections.DecorrelatedLarge
+::: fairground.collections.DecorrelatedLarge
 
-::: fairml_datasets.collections.PermissivelyLicensedSmall
+::: fairground.collections.PermissivelyLicensedSmall
 
-::: fairml_datasets.collections.PermissivelyLicensedLarge
+::: fairground.collections.PermissivelyLicensedLarge
 
-::: fairml_datasets.collections.PermissivelyLicensedFull
+::: fairground.collections.PermissivelyLicensedFull
 
-::: fairml_datasets.collections.GeographicSmall
+::: fairground.collections.GeographicSmall
 
-::: fairml_datasets.collections.GeographicLarge
+::: fairground.collections.GeographicLarge
 
-::: fairml_datasets.collections.GeographicFull
+::: fairground.collections.GeographicFull
 
 ## Usage Examples
 
 ### Using the Complete Corpus
 
 ```python
-from fairml_datasets.collections import Corpus
+from fairground.collections import Corpus
 
 # Create the corpus (all available datasets and their scenarios)
 corpus = Corpus(inclue_large_datasets=True)
@@ -44,7 +44,7 @@ for scenario in corpus:
 ### Using Predefined Collections
 
 ```python
-from fairml_datasets.collections import DecorrelatedSmall, PermissivelyLicensedFull, GeographicLarge
+from fairground.collections import DecorrelatedSmall, PermissivelyLicensedFull, GeographicLarge
 
 # Use a small collection of decorrelated datasets
 collection = DecorrelatedSmall()

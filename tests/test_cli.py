@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock
 import pandas as pd
 from click.testing import CliRunner
 
-from fairml_datasets.__main__ import cli
+from fairground.__main__ import cli
 
 
 @pytest.fixture
@@ -69,7 +69,7 @@ def mock_datasets():
     return datasets_mock
 
 
-@patch("fairml_datasets.__main__.annotations.load")
+@patch("fairground.__main__.annotations.load")
 def test_metadata_annotations(mock_load, mock_annotations_df, runner, tmp_path):
     """Test metadata command with annotations type"""
     # Setup
@@ -93,8 +93,8 @@ def test_metadata_annotations(mock_load, mock_annotations_df, runner, tmp_path):
         assert data[1]["ann_dataset_name"] == "Test Dataset 2"
 
 
-@patch("fairml_datasets.__main__.annotations.load")
-@patch("fairml_datasets.__main__.Datasets")
+@patch("fairground.__main__.annotations.load")
+@patch("fairground.__main__.Datasets")
 def test_metadata_descriptives(
     mock_datasets_class, mock_load, mock_annotations_df, mock_datasets, runner, tmp_path
 ):
@@ -122,8 +122,8 @@ def test_metadata_descriptives(
         assert data[1]["id"] == "test2"
 
 
-@patch("fairml_datasets.__main__.annotations.load")
-@patch("fairml_datasets.__main__.Datasets")
+@patch("fairground.__main__.annotations.load")
+@patch("fairground.__main__.Datasets")
 def test_metadata_single_dataset(
     mock_datasets_class, mock_load, mock_annotations_df, mock_datasets, runner, tmp_path
 ):
@@ -161,8 +161,8 @@ def test_metadata_single_dataset(
         assert data[0]["id"] == "test1"
 
 
-@patch("fairml_datasets.__main__.annotations.load")
-@patch("fairml_datasets.__main__.Datasets")
+@patch("fairground.__main__.annotations.load")
+@patch("fairground.__main__.Datasets")
 def test_metadata_all(
     mock_datasets_class, mock_load, mock_annotations_df, mock_datasets, runner, tmp_path
 ):
@@ -185,7 +185,7 @@ def test_metadata_all(
     assert mock_datasets.generate_metadata.called
 
 
-@patch("fairml_datasets.__main__.Datasets")
+@patch("fairground.__main__.Datasets")
 def test_export_datasets_command(mock_datasets_class, mock_datasets, runner, tmp_path):
     """Test export_datasets command"""
     # Setup
@@ -214,7 +214,7 @@ def test_export_datasets_command(mock_datasets_class, mock_datasets, runner, tmp
         assert Path("export/test1.csv").exists()
 
 
-@patch("fairml_datasets.__main__.Datasets")
+@patch("fairground.__main__.Datasets")
 def test_export_datasets_split(mock_datasets_class, mock_datasets, runner, tmp_path):
     """Test export_datasets command with split stage"""
     # Setup
@@ -251,7 +251,7 @@ def test_export_datasets_split(mock_datasets_class, mock_datasets, runner, tmp_p
         assert Path("export/test1--val.csv").exists()
 
 
-@patch("fairml_datasets.__main__.Datasets")
+@patch("fairground.__main__.Datasets")
 def test_export_datasets_with_usage_info(mock_datasets_class, mock_datasets, runner):
     """Test export_datasets command with usage info flag"""
     # Setup
@@ -290,7 +290,7 @@ def test_export_datasets_with_usage_info(mock_datasets_class, mock_datasets, run
         # Note: The actual file might not be created due to json.dumps usage issue in the code
 
 
-@patch("fairml_datasets.__main__.Datasets")
+@patch("fairground.__main__.Datasets")
 def test_export_citations_all_datasets(mock_datasets, runner, tmp_path):
     """Test exporting citations for all datasets."""
     # Mock the datasets
@@ -329,7 +329,7 @@ def test_export_citations_all_datasets(mock_datasets, runner, tmp_path):
         assert "title={Dataset 2}" in content
 
 
-@patch("fairml_datasets.__main__.Datasets")
+@patch("fairground.__main__.Datasets")
 def test_export_citations_specific_datasets(mock_datasets_class, runner, tmp_path):
     """Test exporting citations for specific datasets."""
     # Mock the datasets
@@ -364,7 +364,7 @@ def test_export_citations_specific_datasets(mock_datasets_class, runner, tmp_pat
         assert "title={Dataset 1}" in content
 
 
-@patch("fairml_datasets.__main__.Datasets")
+@patch("fairground.__main__.Datasets")
 def test_duplicate_citations(mock_datasets_class, runner, tmp_path):
     """Test that duplicate citations are only included once."""
     # Mock the datasets with duplicate citations

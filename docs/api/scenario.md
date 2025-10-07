@@ -6,4 +6,4 @@ The selection of sensitive attributes will automatically apply to the transforma
 
 ## Class Documentation
 
-::: fairml_datasets.scenario.Scenario
+::: fairground.scenario.Scenario

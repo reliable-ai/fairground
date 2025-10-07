@@ -27,19 +27,6 @@ wheels = [
 ]
 
 [[package]]
-name = "air"
-version = "0.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "jinja2" },
-    { name = "markdown" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/d7/71/b46f19efa0d3d998b25c6c24f31ee32409a7a44d979c8163bcf34ed8c5f3/air-0.1.0.tar.gz", hash = "sha256:cb0a60f7c757c975cc1388b9a9c5c3372ad3c411f79cfed59ab55d29db3c179d", size = 3279 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b5/9a/f951d9e9bc3303cd8e5f1abf1e41a8ec0dc1d772a3e981b6c30fd18234a3/air-0.1.0-py3-none-any.whl", hash = "sha256:c0a35a09a1974de8f1d5634340523174ecd24962f953dac8a34933b4e34b7153", size = 2892 },
-]
-
-[[package]]
 name = "ansicolors"
 version = "1.1.8"
 source = { registry = "https://pypi.org/simple" }
@@ -303,15 +290,6 @@ wheels = [
 ]
 
 [[package]]
-name = "et-xmlfile"
-version = "2.0.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d3/38/af70d7ab1ae9d4da450eeec1fa3918940a5fafb9055e934af8d6eb0c2313/et_xmlfile-2.0.0.tar.gz", hash = "sha256:dab3f4764309081ce75662649be815c4c9081e88f0837825f90fd28317d4da54", size = 17234 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c1/8b/5fe2cc11fee489817272089c4203e679c63b570a5aaeb18d852ae3cbba6a/et_xmlfile-2.0.0-py3-none-any.whl", hash = "sha256:7a91720bc756843502c3b7504c77b8fe44217c85c537d85037f0f536151b2caa", size = 18059 },
-]
-
-[[package]]
 name = "exceptiongroup"
 version = "1.2.2"
 source = { registry = "https://pypi.org/simple" }
@@ -330,43 +308,7 @@ wheels = [
 ]
 
 [[package]]
-name = "fairlearn"
-version = "0.11.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "numpy" },
-    { name = "pandas" },
-    { name = "scikit-learn" },
-    { name = "scipy" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ee/c0/a7c1288a3ec5c775a5709b46f68678b5d65511d1aab142171272dc35498d/fairlearn-0.11.0.tar.gz", hash = "sha256:d836b851dd33c4d27bb07ab01b5f84b90d52b716c5bade54731656073c47f445", size = 167101 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ec/10/7142b64f0835958920672410c0002b3575d668db979000266e81b19eb4ac/fairlearn-0.11.0-py3-none-any.whl", hash = "sha256:c8592e54412bd612a6a9823d177c9eab9212582c22ca01723739362971fcc266", size = 232283 },
-]
-
-[[package]]
-name = "fairml-datasets"
-version = "0.1.0"
-source = { directory = "fairml_datasets" }
-dependencies = [
-    { name = "air" },
-    { name = "openpyxl" },
-    { name = "pandas" },
-    { name = "scikit-learn" },
-    { name = "xlrd" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "air" },
-    { name = "openpyxl" },
-    { name = "pandas" },
-    { name = "scikit-learn" },
-    { name = "xlrd" },
-]
-
-[[package]]
-name = "fairness-datasets"
+name = "fairground"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
@@ -374,7 +316,6 @@ dependencies = [
     { name = "blackboxauditing" },
     { name = "click" },
     { name = "fairlearn" },
-    { name = "fairml-datasets" },
     { name = "fastparquet" },
     { name = "folktables" },
     { name = "multiversum" },
@@ -403,8 +344,8 @@ requires-dist = [
     { name = "aif360", specifier = ">=0.6.1" },
     { name = "blackboxauditing", specifier = ">=0.1.54" },
     { name = "click", specifier = ">=8.1.7" },
+    { name = "fairground", directory = "fairground" },
     { name = "fairlearn", specifier = ">=0.11.0" },
-    { name = "fairml-datasets", directory = "fairml_datasets" },
     { name = "fastparquet", specifier = ">=2024.11.0" },
     { name = "folktables", specifier = ">=0.0.12" },
     { name = "mkdocs", marker = "extra == 'docs'" },
@@ -420,6 +361,21 @@ requires-dist = [
     { name = "scikit-learn", specifier = ">=1.5.2" },
     { name = "scipy", specifier = ">=1.14.1" },
     { name = "tensorflow", specifier = ">=2.18.0" },
+]
+
+[[package]]
+name = "fairlearn"
+version = "0.11.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "scikit-learn" },
+    { name = "scipy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ee/c0/a7c1288a3ec5c775a5709b46f68678b5d65511d1aab142171272dc35498d/fairlearn-0.11.0.tar.gz", hash = "sha256:d836b851dd33c4d27bb07ab01b5f84b90d52b716c5bade54731656073c47f445", size = 167101 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ec/10/7142b64f0835958920672410c0002b3575d668db979000266e81b19eb4ac/fairlearn-0.11.0-py3-none-any.whl", hash = "sha256:c8592e54412bd612a6a9823d177c9eab9212582c22ca01723739362971fcc266", size = 232283 },
 ]
 
 [[package]]
@@ -1135,18 +1091,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/3e/df/2619393b1e1b565cd2d4c4403bdd979621e2c4dea1f8532754b2598ed63b/numpy-2.0.2-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:d731a1c6116ba289c1e9ee714b08a8ff882944d4ad631fd411106a30f083c326", size = 14400722 },
     { url = "https://files.pythonhosted.org/packages/22/ad/77e921b9f256d5da36424ffb711ae79ca3f451ff8489eeca544d0701d74a/numpy-2.0.2-cp310-cp310-win32.whl", hash = "sha256:984d96121c9f9616cd33fbd0618b7f08e0cfc9600a7ee1d6fd9b239186d19d97", size = 6472170 },
     { url = "https://files.pythonhosted.org/packages/10/05/3442317535028bc29cf0c0dd4c191a4481e8376e9f0db6bcf29703cadae6/numpy-2.0.2-cp310-cp310-win_amd64.whl", hash = "sha256:c7b0be4ef08607dd04da4092faee0b86607f111d5ae68036f16cc787e250a131", size = 15905558 },
-]
-
-[[package]]
-name = "openpyxl"
-version = "3.1.5"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "et-xmlfile" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/3d/f9/88d94a75de065ea32619465d2f77b29a0469500e99012523b91cc4141cd1/openpyxl-3.1.5.tar.gz", hash = "sha256:cf0e3cf56142039133628b5acffe8ef0c12bc902d2aadd3e0fe5878dc08d1050", size = 186464 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c0/da/977ded879c29cbd04de313843e76868e6e13408a94ed6b987245dc7c8506/openpyxl-3.1.5-py2.py3-none-any.whl", hash = "sha256:5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2", size = 250910 },
 ]
 
 [[package]]
@@ -1939,13 +1883,4 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/88/8f/706f2fee019360cc1da652353330350c76aa5746b4e191082e45d6838faf/wrapt-1.16.0-cp310-cp310-win32.whl", hash = "sha256:f6b2d0c6703c988d334f297aa5df18c45e97b0af3679bb75059e0e0bd8b1069d", size = 35335 },
     { url = "https://files.pythonhosted.org/packages/19/2b/548d23362e3002ebbfaefe649b833fa43f6ca37ac3e95472130c4b69e0b4/wrapt-1.16.0-cp310-cp310-win_amd64.whl", hash = "sha256:decbfa2f618fa8ed81c95ee18a387ff973143c656ef800c9f24fb7e9c16054e2", size = 37528 },
     { url = "https://files.pythonhosted.org/packages/ff/21/abdedb4cdf6ff41ebf01a74087740a709e2edb146490e4d9beea054b0b7a/wrapt-1.16.0-py3-none-any.whl", hash = "sha256:6906c4100a8fcbf2fa735f6059214bb13b97f75b1a61777fcf6432121ef12ef1", size = 23362 },
-]
-
-[[package]]
-name = "xlrd"
-version = "2.0.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/a6/b3/19a2540d21dea5f908304375bd43f5ed7a4c28a370dc9122c565423e6b44/xlrd-2.0.1.tar.gz", hash = "sha256:f72f148f54442c6b056bf931dbc34f986fd0c3b0b6b5a58d013c9aef274d0c88", size = 100259 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a6/0c/c2a72d51fe56e08a08acc85d13013558a2d793028ae7385448a6ccdfae64/xlrd-2.0.1-py2.py3-none-any.whl", hash = "sha256:6a33ee89877bd9abc1158129f6e94be74e2679636b8a205b43b85206c3f0bbdd", size = 96531 },
 ]

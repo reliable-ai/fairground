@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import patch
 import pandas as pd
-from fairml_datasets import Datasets
-from fairml_datasets.dataset import Dataset
+from fairground import Datasets
+from fairground.dataset import Dataset
 
 
 @pytest.fixture
@@ -19,7 +19,7 @@ def mock_annotations_data():
     return df
 
 
-@patch("fairml_datasets.datasets.annotations.load")
+@patch("fairground.datasets.annotations.load")
 def test_datasets_init_default(mock_load, mock_annotations_data):
     """Test initialization with default parameters."""
     mock_load.return_value = mock_annotations_data
@@ -34,7 +34,7 @@ def test_datasets_init_default(mock_load, mock_annotations_data):
     assert "dataset4" not in datasets.get_ids()
 
 
-@patch("fairml_datasets.datasets.annotations.load")
+@patch("fairground.datasets.annotations.load")
 def test_datasets_init_include_large(mock_load, mock_annotations_data):
     """Test initialization with large datasets included."""
     mock_load.return_value = mock_annotations_data
@@ -46,7 +46,7 @@ def test_datasets_init_include_large(mock_load, mock_annotations_data):
     assert set(datasets.get_ids()) == {"dataset1", "dataset2", "dataset3", "dataset4"}
 
 
-@patch("fairml_datasets.datasets.annotations.load")
+@patch("fairground.datasets.annotations.load")
 def test_datasets_init_with_ids(mock_load, mock_annotations_data):
     """Test initialization with specific dataset IDs."""
     mock_load.return_value = mock_annotations_data
@@ -58,7 +58,7 @@ def test_datasets_init_with_ids(mock_load, mock_annotations_data):
     assert set(datasets.get_ids()) == {"dataset1", "dataset2"}
 
 
-@patch("fairml_datasets.datasets.annotations.load")
+@patch("fairground.datasets.annotations.load")
 def test_datasets_init_with_df_info(mock_load):
     """Test initialization with provided df_info."""
     # Create a custom df_info

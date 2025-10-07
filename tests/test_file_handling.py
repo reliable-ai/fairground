@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 from unittest.mock import patch
 
-from fairml_datasets.file_handling import (
+from fairground.file_handling import (
     load_text_file,
     search_zip_archive,
     search_nested_zip_archives,
@@ -230,7 +230,7 @@ def test_load_dataset_unsupported_modifier():
 def test_load_dataset_compressed():
     """Test loading a compressed dataset."""
     # Since actual compression testing would be complex, we'll mock the load_text_file function
-    with patch("fairml_datasets.file_handling.load_text_file") as mock_load_text_file:
+    with patch("fairground.file_handling.load_text_file") as mock_load_text_file:
         mock_df = pd.DataFrame({"col1": [1, 4], "col2": [2, 5], "col3": [3, 6]})
         mock_load_text_file.return_value = mock_df
 

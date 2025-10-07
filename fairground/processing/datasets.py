@@ -34,7 +34,7 @@ def get_processing_script(id: str) -> Optional[ProcessingScript]:
         AssertionError: If the script exists but is not a ProcessingScript subclass
     """
     try:
-        module = import_module(f".{id}", package="fairml_datasets.processing.scripts")
+        module = import_module(f".{id}", package="fairground.processing.scripts")
         script = getattr(module, "Script")
 
         assert issubclass(

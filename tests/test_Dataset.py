@@ -3,7 +3,7 @@ import pytest
 from unittest.mock import patch
 import pandas as pd
 from aif360.datasets import BinaryLabelDataset
-from fairml_datasets import Dataset
+from fairground import Dataset
 
 
 @pytest.fixture

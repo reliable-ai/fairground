@@ -106,7 +106,7 @@ def clean(datasets: pd.DataFrame):
     Clean and process the raw annotations DataFrame.
 
     This function filters datasets based on various criteria, transforms values,
-    and prepares the annotations for use in the fairml_datasets package.
+    and prepares the annotations for use in the fairground package.
 
     Args:
         datasets: Raw annotations DataFrame

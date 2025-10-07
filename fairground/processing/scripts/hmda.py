@@ -1,6 +1,6 @@
 from typing import List
 
-from fairml_datasets.file_handling import (
+from fairground.file_handling import (
     extract_result,
     make_temp_directory,
     search_zip_archive,
