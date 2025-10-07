@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-CC%20BY%204.0-blue.svg)](https://github.com/reliable-ai/fairground/blob/main/LICENSE.md)
 
 <p align="center">
-  <img alt="faiground logo" src="https://raw.githubusercontent.com/reliable-ai/fairground/main/docs/assets/fairground-logo-bg.png" width="70%" align="center">
+  <img alt="faiground logo" src="https://raw.githubusercontent.com/reliable-ai/fairground/main/docs/assets/fairground-logo-bg.png" width="50%" align="center">
 </p>
 
 A comprehensive Python package for loading, processing, and discovering datasets commonly used in algorithmic fairness research. This package provides tools to load datasets, apply preprocessing techniques, and generate relevant metadata for fairness-aware machine learning workflows.
