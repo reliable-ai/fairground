@@ -7,18 +7,12 @@ license = {text = "CC BY 4.0"}
 requires-python = ">=3.10"
 dependencies = [
     "aif360>=0.6.1",
-    "blackboxauditing>=0.1.54",
     "click>=8.1.7",
-    "fairlearn>=0.11.0",
     "fastparquet>=2024.11.0",
     "folktables>=0.0.12",
-    "multiversum>=0.7.0",
-    "pytest>=8.3.3",
     "rich>=13.9.4",
-    "ruff>=0.7.3",
     "scikit-learn>=1.5.2",
     "scipy>=1.14.1",
-    "tensorflow>=2.18.0",
 ]
 
 [build-system]
@@ -27,6 +21,12 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["fairml_datasets"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.3",
+    "ruff>=0.7.3",
+]
 
 [project.optional-dependencies]
 test = ["pytest", "ruff"]
