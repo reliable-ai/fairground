@@ -22,6 +22,9 @@ dependencies = [
     "tensorflow>=2.18.0",
 ]
 
+[tool.setuptools.packages.find]
+where = ["fairml_datasets"]
+
 [tool.uv.sources]
 fairml-datasets = { path = "fairml_datasets" }
 
