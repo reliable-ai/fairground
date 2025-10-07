@@ -1,0 +1,50 @@
+[
+  {
+    "scenario_id": "folktables_acspubliccoverage:RAC1P"
+  },
+  {
+    "scenario_id": "heart_disease:sex"
+  },
+  {
+    "scenario_id": "communities_unnormalized:pct12-21"
+  },
+  {
+    "scenario_id": "lipton_synthetic_hiring_dataset:sex"
+  },
+  {
+    "scenario_id": "bank:age;marital"
+  },
+  {
+    "scenario_id": "german_credit_onehot:> 25 years"
+  },
+  {
+    "scenario_id": "folktables_acsincome:RAC1P"
+  },
+  {
+    "scenario_id": "south_german_credit:age"
+  },
+  {
+    "scenario_id": "folktables_acsemployment_small:RAC1P"
+  },
+  {
+    "scenario_id": "german_credit_numeric:age"
+  },
+  {
+    "scenario_id": "student:sex;age"
+  },
+  {
+    "scenario_id": "folktables_acstraveltime_small:RAC1P"
+  },
+  {
+    "scenario_id": "folktables_acspubliccoverage_small:RAC1P"
+  },
+  {
+    "scenario_id": "communities:agePct16t24"
+  },
+  {
+    "scenario_id": "folktables_acsmobility:RAC1P"
+  },
+  {
+    "scenario_id": "law_school_tensorflow:gender"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "scenario_id": "folktables_acspubliccoverage:RAC1P"
+  },
+  {
+    "scenario_id": "heart_disease:sex"
+  },
+  {
+    "scenario_id": "hmda:applicant_sex_name;applicant_race_name_1"
+  },
+  {
+    "scenario_id": "stop_question_and_frisk_data:SUSPECT_SEX;SUSPECT_RACE_DESCRIPTION; SUSPECT_REPORTED_AGE"
+  },
+  {
+    "scenario_id": "folktables_acsemployment_small:RAC1P"
+  }
+]

@@ -1,0 +1,45 @@
+name: Generate Metadata
+
+on:
+  workflow_dispatch:
+
+jobs:
+  uv-example:
+    name: python
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - name: Setup Python
+        run: uv python install
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Cache dataset_cache/ directory
+        uses: actions/cache@v3
+        with:
+          path: dataset_cache
+          key: ${{ runner.os }}-ds-dataset_cache
+
+      - name: Cache cache/ directory
+        uses: actions/cache@v3
+        with:
+          path: cache
+          key: ${{ runner.os }}-ds-cache
+
+      - name: Run tests
+        run:  uv run -m fairml_datasets metadata -f metadata.csv
+
+      - name: Upload metadata.csv
+        uses: actions/upload-artifact@v4
+        with:
+          name: metadata
+          path: metadata.csv

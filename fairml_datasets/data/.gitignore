@@ -1,0 +1,5 @@
+/raw/**
+/interim/**
+!/interim/.gitkeep
+/final/datasets_meta.csv
+!/final/annotations.csv

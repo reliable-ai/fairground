@@ -1,0 +1,20 @@
+[
+  {
+    "scenario_id": "folktables_acspubliccoverage:RAC1P"
+  },
+  {
+    "scenario_id": "heart_disease:sex"
+  },
+  {
+    "scenario_id": "dutch:age;citizenship"
+  },
+  {
+    "scenario_id": "creditcard:SEX"
+  },
+  {
+    "scenario_id": "german_credit_onehot:> 25 years"
+  },
+  {
+    "scenario_id": "student:sex"
+  }
+]

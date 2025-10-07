@@ -1,0 +1,36 @@
+[project]
+name = "fairness-datasets"
+version = "0.1.0"
+description = "A package for managing and processing datasets for fairness research in machine learning"
+readme = "README.md"
+license = {text = "CC BY 4.0"}
+requires-python = "==3.10.14"
+dependencies = [
+    "aif360>=0.6.1",
+    "blackboxauditing>=0.1.54",
+    "click>=8.1.7",
+    "fairlearn>=0.11.0",
+    "fairml-datasets",
+    "fastparquet>=2024.11.0",
+    "folktables>=0.0.12",
+    "multiversum>=0.7.0",
+    "pytest>=8.3.3",
+    "rich>=13.9.4",
+    "ruff>=0.7.3",
+    "scikit-learn>=1.5.2",
+    "scipy>=1.14.1",
+    "tensorflow>=2.18.0",
+]
+
+[tool.uv.sources]
+fairness-datasets = { workspace = true }
+fairml-datasets = { path = "fairml_datasets" }
+
+[project.optional-dependencies]
+test = ["pytest", "ruff"]
+docs = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "mkdocs-click",
+]

@@ -1,0 +1,8 @@
+{
+  "files": {
+    "ignore": [".vitepress/cache/**", "*.min.css", "dist/**", "metadata.json"]
+  },
+  "formatter": {
+    "indentStyle": "space"
+  }
+}

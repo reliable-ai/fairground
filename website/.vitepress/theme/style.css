@@ -1,0 +1,56 @@
+/**
+ * Customize default theme styling by overriding CSS variables:
+ * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
+ */
+
+/**
+ * Colors
+ * -------------------------------------------------------------------------- */
+
+:root {
+  /*  --vp-c-brand: hsl(181, 70%, 45%);
+  --vp-c-brand-light: #60D8DA;
+  --vp-c-brand-lighter: #89EAEC;
+  --vp-c-brand-lightest: #8FEFF2;
+  --vp-c-brand-dark: #147475;
+  --vp-c-brand-darker: #0E5253;
+  --vp-c-brand-dimm: hsla(181, 70%, 45%, 0.08);
+  --vp-c-brand-soft: hsla(181, 70%, 45%, 0.08); */
+
+  --vp-c-brand-1: var(--vp-c-green-1);
+  --vp-c-brand-2: var(--vp-c-green-2);
+  --vp-c-brand-3: var(--vp-c-green-3);
+  --vp-c-brand-soft: var(--vp-c-green-soft);
+}
+
+/**
+ * Component: Home
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #155799 0%,
+    #30a46c 100%
+  );
+
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #155799 50%,
+    #30a46c 50%
+  );
+  --vp-home-hero-image-filter: blur(40px);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --vp-home-hero-image-filter: blur(56px);
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --vp-home-hero-image-filter: blur(72px);
+  }
+}

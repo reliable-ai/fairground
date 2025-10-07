@@ -1,0 +1,17 @@
+[
+  {
+    "scenario_id": "folktables_acspubliccoverage:RAC1P"
+  },
+  {
+    "scenario_id": "heart_disease:sex"
+  },
+  {
+    "scenario_id": "communities_unnormalized:pct12-21"
+  },
+  {
+    "scenario_id": "lipton_synthetic_hiring_dataset:sex"
+  },
+  {
+    "scenario_id": "bank:age;marital"
+  }
+]

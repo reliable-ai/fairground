@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "npm run generate:pages && npm run render",
+    "render": "vitepress build",
+    "preview": "vitepress preview",
+    "generate:data": "uv run --directory .. -m fairml_datasets metadata --type=annotations -f website/metadata.json",
+    "generate:pages": "node generate_pages.js",
+    "format": "npx @biomejs/biome check . --write"
+  },
+  "dependencies": {
+    "ag-grid-vue3": "^33.3.0",
+    "vitepress": "^1.6.3",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.13.14"
+  }
+}
