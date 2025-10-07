@@ -11,7 +11,7 @@ A comprehensive Python package for loading, processing, and working with dataset
 
 ## Overview
 
-![The dataset preprocessing pipeline supported by the package.](assets/pipeline.png)
+![The dataset preprocessing pipeline supported by the package.](https://raw.githubusercontent.com/reliable-ai/fairground/main/docs/assets/pipeline.png)
 
 FairML Datasets provides tools and interfaces to download, load, transform, and analyze the datasets in the *FairGround* corpus. It handles sensitive attributes and facilitates fairness-aware machine learning experiments. The package supports the full data processing pipeline from downloading data all the way to splitting data for ML training.
 
