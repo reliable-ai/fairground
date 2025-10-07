@@ -1,5 +1,5 @@
 [project]
-name = "fairness-datasets"
+name = "fairml-datasets"
 version = "0.1.0"
 description = "A package for managing and processing datasets for fairness research in machine learning"
 readme = "README.md"
@@ -23,7 +23,6 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-fairness-datasets = { workspace = true }
 fairml-datasets = { path = "fairml_datasets" }
 
 [project.optional-dependencies]
