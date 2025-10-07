@@ -2,7 +2,6 @@
 
 [![PyPI](https://img.shields.io/pypi/v/fairml-datasets.svg)](https://pypi.org/project/fairml-datasets/)
 [![Tests](https://github.com/reliable-ai/fairground/actions/workflows/tests.yml/badge.svg)](https://github.com/reliable-ai/fairground/actions/workflows/tests.yml)
-[![License](https://img.shields.io/badge/license-CC%20BY%204.0-blue.svg)](https://github.com/reliable-ai/fairground/blob/main/LICENSE.md)
 
 <p align="center">
   <img alt="faiground logo" src="https://raw.githubusercontent.com/reliable-ai/fairground/main/docs/assets/fairground-logo-bg.png" width="50%" align="center">
