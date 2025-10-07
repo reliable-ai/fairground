@@ -78,6 +78,7 @@ const sidebar: SidebarItem[] = [
 export default defineConfig({
   title: "FairGround",
   description: "A framework and corpus of datasets for fairness research.",
+  base: "/fairground/",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -85,8 +86,8 @@ export default defineConfig({
       { text: "About", link: "/about" },
       { text: "Datasets", link: "/fullscreen" },
       {
-        text: "Package",
-        link: "https://brave-ocean-078c2100f.6.azurestaticapps.net",
+        text: "Package Docs",
+        link: "/docs/",
       },
     ],
 

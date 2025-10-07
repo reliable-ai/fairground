@@ -1,4 +1,5 @@
 site_name: "FairML Datasets"
+site_url: "https://reliable-ai.github.io/fairground/docs/"
 theme:
   name: "material"
   palette:
@@ -41,7 +42,7 @@ plugins:
 nav:
   - Home: index.md
   - Getting Started: guide/getting-started.md
-  - Datasets Overview (external): https://ashy-smoke-02965b70f.6.azurestaticapps.net/
+  - Datasets Overview: https://reliable-ai.github.io/fairground/
   - API Reference:
       - Dataset: api/dataset.md
       - Datasets: api/datasets.md
