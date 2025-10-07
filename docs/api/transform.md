@@ -6,4 +6,4 @@ This module will only be interesting for advanced preprocessing needs / high con
 
 ## Module Documentation
 
-::: fairground.transform
+::: fairml_datasets.transform

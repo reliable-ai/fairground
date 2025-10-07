@@ -1,5 +1,5 @@
 [project]
-name = "fairground"
+name = "fairness-datasets"
 version = "0.1.0"
 description = "A package for managing and processing datasets for fairness research in machine learning"
 readme = "README.md"
@@ -10,7 +10,7 @@ dependencies = [
     "blackboxauditing>=0.1.54",
     "click>=8.1.7",
     "fairlearn>=0.11.0",
-    "fairground",
+    "fairml-datasets",
     "fastparquet>=2024.11.0",
     "folktables>=0.0.12",
     "multiversum>=0.7.0",
@@ -24,7 +24,7 @@ dependencies = [
 
 [tool.uv.sources]
 fairness-datasets = { workspace = true }
-fairground = { path = "fairground" }
+fairml-datasets = { path = "fairml_datasets" }
 
 [project.optional-dependencies]
 test = ["pytest", "ruff"]

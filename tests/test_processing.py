@@ -3,12 +3,12 @@ import pandas as pd
 from pathlib import Path
 from typing import List
 from unittest.mock import patch, MagicMock
-from fairground.processing import (
+from fairml_datasets.processing import (
     ProcessingScript,
     LoadingScript,
     PreparationScript,
 )
-from fairground.dataset import Dataset
+from fairml_datasets.dataset import Dataset
 
 
 class SimpleProcessingScript(ProcessingScript):
@@ -135,7 +135,7 @@ def test_preparation_script_default_options():
     assert script.options == {"drop_na": False, "transform_col": None}
 
 
-@patch("fairground.dataset.get_processing_script")
+@patch("fairml_datasets.dataset.get_processing_script")
 def test_processing_options_in_dataset_get_script(mock_get_processing_script):
     """Test that Dataset correctly passes processing options to the get_processing_script method."""
     # Set up mock
@@ -169,9 +169,9 @@ def test_processing_options_in_dataset_get_script(mock_get_processing_script):
     mock_script_class.assert_called_once_with(processing_options=processing_options)
 
 
-@patch("fairground.dataset.get_processing_script")
-@patch("fairground.dataset.download_dataset")
-@patch("fairground.dataset.load_dataset")
+@patch("fairml_datasets.dataset.get_processing_script")
+@patch("fairml_datasets.dataset.download_dataset")
+@patch("fairml_datasets.dataset.load_dataset")
 def test_processing_options_in_dataset_load(
     mock_load_dataset, mock_download_dataset, mock_get_processing_script
 ):
@@ -209,7 +209,7 @@ def test_processing_options_in_dataset_load(
     # Test with default preparation script
     dataset = Dataset(info)
     # Mock issubclass to return True for our mock being a PreparationScript
-    with patch("fairground.dataset.isinstance", return_value=True):
+    with patch("fairml_datasets.dataset.isinstance", return_value=True):
         processing_options = {"option1": "value1", "option2": 42}
         dataset.load(
             stage="prepared", check_cache=False, processing_options=processing_options
@@ -220,7 +220,7 @@ def test_processing_options_in_dataset_load(
     mock_script_instance.prepare.assert_called_once()
 
 
-@patch("fairground.processing.datasets.get_processing_script")
+@patch("fairml_datasets.processing.datasets.get_processing_script")
 def test_dataset_warns_on_unused_processing_options(mock_get_processing_script):
     """Test that Dataset warns when processing_options are provided but no script is available."""
     # Set up mock to return None (no script available)

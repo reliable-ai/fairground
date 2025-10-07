@@ -6,7 +6,7 @@ import pytest
 import pandas as pd
 import numpy as np
 
-from fairground.transform import (
+from fairml_datasets.transform import (
     filter_columns,
     transform,
     PreprocessingInfo,

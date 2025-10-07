@@ -6,8 +6,8 @@ import pytest
 import pandas as pd
 from unittest.mock import patch, MagicMock
 
-from fairground.scenario import Scenario
-from fairground.dataset import Dataset
+from fairml_datasets.scenario import Scenario
+from fairml_datasets.dataset import Dataset
 
 
 @pytest.fixture
@@ -29,7 +29,7 @@ def mock_dataset():
 @pytest.fixture
 def mock_dataset_class():
     """Create a mock Dataset class with from_id method."""
-    with patch("fairground.scenario.Dataset") as mock_dataset_cls:
+    with patch("fairml_datasets.scenario.Dataset") as mock_dataset_cls:
         mock_instance = MagicMock(spec=Dataset)
         # Create a pd.Series for the info attribute
         mock_instance.info = pd.Series(
@@ -63,7 +63,7 @@ def test_scenario_init_with_dataset_id(mock_dataset_class):
     new_sensitive_columns = ["new_sensitive_col_1", "new_sensitive_col_2"]
 
     # Fix the isinstance check in Scenario's __init__ method
-    with patch("fairground.scenario.isinstance", return_value=False):
+    with patch("fairml_datasets.scenario.isinstance", return_value=False):
         scenario = Scenario(dataset_id, sensitive_columns=new_sensitive_columns)
 
     # Check that Dataset.from_id was called with the correct ID

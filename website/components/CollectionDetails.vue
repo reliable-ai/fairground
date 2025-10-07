@@ -61,7 +61,7 @@ const datasets = computed(() => {
 
 const exampleCode = computed(() => {
   const collectionName = props.name.replace(/[^a-zA-Z0-9]/g, "");
-  return `from fairground.collections import ${collectionName}
+  return `from fairml_datasets.collections import ${collectionName}
 
 collection = ${collectionName}() # [!code highlight]
 

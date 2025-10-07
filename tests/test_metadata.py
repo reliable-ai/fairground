@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 import logging
 
-from fairground.metadata import (
+from fairml_datasets.metadata import (
     generate_general_descriptives,
     generate_binarized_descriptives,
 )

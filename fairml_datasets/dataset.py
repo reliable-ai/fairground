@@ -10,7 +10,7 @@ from rich.logging import RichHandler
 from itertools import combinations, chain
 from sklearn.model_selection import train_test_split as sk_train_test_split
 
-from fairground.metadata import (
+from fairml_datasets.metadata import (
     generate_binarized_descriptives,
     generate_general_descriptives,
 )
@@ -89,7 +89,7 @@ class Dataset:
         Returns:
             str: A string representation of the Dataset object
         """
-        return f"fairground.Dataset(id={self.dataset_id})"
+        return f"fairml_datasets.Dataset(id={self.dataset_id})"
 
     @property
     def dataset_id(self) -> str:

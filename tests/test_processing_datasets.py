@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from fairground.processing.datasets import (
+from fairml_datasets.processing.datasets import (
     binarize_column,
     parse_feature_column_filter,
 )

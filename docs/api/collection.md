@@ -4,17 +4,17 @@ The `Collection` classes provide a way to organize and iterate through groups of
 
 ## Class Documentation
 
-::: fairground.collection.Collection
+::: fairml_datasets.collection.Collection
 
-::: fairground.collection.PrespecifiedCollection
+::: fairml_datasets.collection.PrespecifiedCollection
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```python
-from fairground.scenario import Scenario
-from fairground.collection import Collection
+from fairml_datasets.scenario import Scenario
+from fairml_datasets.collection import Collection
 
 # Create scenarios
 scenario1 = Scenario("adult", ["sex"])

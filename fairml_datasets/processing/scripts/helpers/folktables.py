@@ -15,7 +15,7 @@ from sklearn.model_selection import train_test_split
 
 from folktables.load_acs import state_list
 
-from fairground.file_handling import DOWNLOAD_CACHE_DIR
+from fairml_datasets.file_handling import DOWNLOAD_CACHE_DIR
 
 # Important constants!
 TRAIN_SIZE = 0.7

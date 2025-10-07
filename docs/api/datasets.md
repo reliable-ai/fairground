@@ -4,14 +4,14 @@ The `Datasets` class provides a collection of datasets with methods for filterin
 
 ## Class Documentation
 
-::: fairground.datasets.Datasets
+::: fairml_datasets.datasets.Datasets
 
 ## Usage Examples
 
 ### Loading All Datasets
 
 ```python
-from fairground import Datasets
+from fairml_datasets import Datasets
 
 # Load all available datasets
 datasets = Datasets()

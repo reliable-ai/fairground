@@ -17,7 +17,7 @@ FairML Datasets is designed around a few core concepts:
 To get started, let's first see what datasets are available:
 
 ```python
-from fairground import Datasets
+from fairml_datasets import Datasets
 
 # Load all available datasets
 datasets = Datasets()
@@ -34,7 +34,7 @@ for dataset in datasets:
 Once you've identified a dataset you want to work with, you can load it using either method:
 
 ```python
-from fairground import Dataset, Datasets
+from fairml_datasets import Dataset, Datasets
 
 # Method 1: Access directly using Dataset.from_id
 dataset = Dataset.from_id("folktables_acsincome_small")
@@ -60,7 +60,7 @@ print(f"Target column: {dataset.get_target_column()}")
 The Python Package supports and implements the different steps of the data preprocessing pipeline outlined above. You can access data after each processing step.
 
 ```python
-from fairground import Dataset
+from fairml_datasets import Dataset
 
 dataset = Dataset.from_id("folktables_acsincome_small")
 
@@ -83,7 +83,7 @@ Scenarios behave just like Datasets, but can differ in their selection of sensit
 You can create your own Scenarios by specifying a Dataset and sensitive attributes.
 
 ```python
-from fairground import Scenario
+from fairml_datasets import Scenario
 
 scenario = Scenario(
     dataset="folktables_acsincome_small",
@@ -100,7 +100,7 @@ Collections contain a prespecified selection of Scenarios that maximizes their v
 You can easily iterate over collections in a Python loop
 
 ```python
-from fairground.collections import DecorrelatedSmall
+from fairml_datasets.collections import DecorrelatedSmall
 
 for scenario in DecorrelatedSmall():
     df = scenario.load()

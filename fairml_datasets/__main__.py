@@ -1,5 +1,5 @@
 """
-Command-line interface module for the fairground package.
+Command-line interface module for the fairml_datasets package.
 
 This module provides a CLI for common operations on fairness datasets, including:
 - Generating and exporting metadata
@@ -14,8 +14,8 @@ import logging
 from pathlib import Path
 
 import pandas as pd
-from fairground.processing import annotations
-from fairground import Datasets
+from fairml_datasets.processing import annotations
+from fairml_datasets import Datasets
 from rich.progress import Progress
 
 
@@ -36,7 +36,7 @@ def cli(debug):
 @click.option(
     "-f",
     "--file",
-    default="fairground/data/final/datasets_meta.csv",
+    default="fairml_datasets/data/final/datasets_meta.csv",
     help="Which file to write the metadata to, the ending will determine the format (csv and json supported).",
 )
 @click.option(

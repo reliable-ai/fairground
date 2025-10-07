@@ -4,14 +4,14 @@ The `Dataset` class is the core component that represents an individual dataset 
 
 ## Class Documentation
 
-::: fairground.dataset.Dataset
+::: fairml_datasets.dataset.Dataset
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```python
-from fairground import Dataset
+from fairml_datasets import Dataset
 
 # Load a dataset directly using Dataset.from_id (recommended)
 dataset = Dataset.from_id("folktables_acsincome_small")

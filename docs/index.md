@@ -20,19 +20,19 @@ FairML Datasets provides tools and interfaces to download, load, transform, and 
 ## Installation
 
 ```bash
-pip install fairground
+pip install fairml_datasets
 ```
 
 Or using uv:
 
 ```bash
-uv pip install fairground
+uv pip install fairml_datasets
 ```
 
 ## Quick Start
 
 ```python
-from fairground import Dataset
+from fairml_datasets import Dataset
 
 # Access a specific dataset by ID directly
 dataset = Dataset.from_id("folktables_acsincome_small")
@@ -58,13 +58,13 @@ The package provides a command-line interface for common operations:
 
 ```bash
 # Generate and export metadata
-python -m fairground metadata
+python -m fairml_datasets metadata
 
 # Export datasets in various processing stages
-python -m fairground export-datasets --stage prepared
+python -m fairml_datasets export-datasets --stage prepared
 
 # Export dataset citations in BibTeX format
-python -m fairground export-citations
+python -m fairml_datasets export-citations
 ```
 
 ## Documentation
