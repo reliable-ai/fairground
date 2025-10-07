@@ -1,7 +1,7 @@
 # FairGround
 
 [![PyPI](https://img.shields.io/pypi/v/fairml-datasets.svg)](https://pypi.org/project/fairml-datasets/)
-[![Tests](https://github.com/reliable-ai/fairground/actions/workflows/test.yml/badge.svg)](https://github.com/reliable-ai/fairground/actions/workflows/test.yml)
+[![Tests](https://github.com/reliable-ai/fairground/actions/workflows/tests.yml/badge.svg)](https://github.com/reliable-ai/fairground/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-CC%20BY%204.0-blue.svg)](https://github.com/reliable-ai/fairground/blob/main/LICENSE.md)
 
 <p align="center">
