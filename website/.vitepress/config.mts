@@ -94,9 +94,12 @@ export default defineConfig({
 
     sidebar,
 
-    // socialLinks: [
-    //   { icon: "github", link: "https://github.com/vuejs/vitepress" },
-    // ],
+    socialLinks: [
+      {
+        icon: "github",
+        link: "https://github.com/reliable-ai/fairground",
+      },
+    ],
 
     search: {
       provider: "local",

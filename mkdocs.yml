@@ -51,3 +51,5 @@ nav:
       - Collections: api/collections.md
       - Transformations: api/transform.md
   - CLI Reference: cli.md
+
+repo_url: https://github.com/reliable-ai/fairground
