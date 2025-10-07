@@ -4,13 +4,12 @@ version = "0.1.0"
 description = "A package for managing and processing datasets for fairness research in machine learning"
 readme = "README.md"
 license = {text = "CC BY 4.0"}
-requires-python = "==3.10.14"
+requires-python = ">=3.10"
 dependencies = [
     "aif360>=0.6.1",
     "blackboxauditing>=0.1.54",
     "click>=8.1.7",
     "fairlearn>=0.11.0",
-    "fairml-datasets",
     "fastparquet>=2024.11.0",
     "folktables>=0.0.12",
     "multiversum>=0.7.0",
@@ -22,11 +21,12 @@ dependencies = [
     "tensorflow>=2.18.0",
 ]
 
-[tool.setuptools.packages.find]
-where = ["fairml_datasets"]
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
-[tool.uv.sources]
-fairml-datasets = { path = "fairml_datasets" }
+[tool.setuptools]
+packages = ["fairml_datasets"]
 
 [project.optional-dependencies]
 test = ["pytest", "ruff"]
