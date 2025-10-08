@@ -268,6 +268,7 @@ def transform(
         )
 
     cat_columns = df.select_dtypes(include=["object", "category", "string"]).columns
+    cat_columns = [col for col in cat_columns if col not in sensitive_columns + [target_column]]
     logger.debug(f"Transforming cat. columns: {transform_categorical} ({cat_columns})")
 
     # Limit categorical values if specified

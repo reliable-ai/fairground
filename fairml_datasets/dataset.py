@@ -728,9 +728,9 @@ class Dataset:
                     not available_sensitive_columns
                     and "sensitive_intersection" in pandas_df.columns
                 ):
-                    available_sensitive_columns = ["sensitive_intersection"]
+                    sensitive_columns = ["sensitive_intersection"]
 
-                strat_columns = [target_column] + available_sensitive_columns
+                strat_columns = [target_column] + sensitive_columns
 
                 # Check if columns exist in the dataframe
                 if not set(strat_columns).issubset(set(pandas_df.columns)):
