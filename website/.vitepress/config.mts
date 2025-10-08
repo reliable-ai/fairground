@@ -101,6 +101,11 @@ export default defineConfig({
       },
     ],
 
+    footer: {
+      message: 'Released under <a href="https://github.com/reliable-ai/fairground?tab=readme-ov-file#license">CC-BY-4.0 and GPL-3.0</a>.',
+      copyright: 'Copyright © 2025-present FairGround Authors'
+    },
+
     search: {
       provider: "local",
       options: {
