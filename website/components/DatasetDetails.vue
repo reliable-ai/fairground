@@ -47,7 +47,7 @@ sensitive_columns_org = dataset.sensitive_columns
 # Transform to e.g. impute missing data
 df_transformed, transformation_info = dataset.transform(df)
 # Sensitive columns may change due to transformation
-sensitive_columns = transformation_info['sensitive_columns']
+sensitive_columns = transformation_info.sensitive_columns
 
 # Split into train and test sets
 train_df, test_df = dataset.train_test_split(df, test_size=0.3)

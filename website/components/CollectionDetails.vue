@@ -83,7 +83,7 @@ for scenario in collection:
     # Transform to  e.g. impute missing data
     df_transformed, transformation_info = scenario.transform(df)
     # Sensitive columns may change due to transformation
-    sensitive_columns = transformation_info['sensitive_columns']
+    sensitive_columns = transformation_info.sensitive_columns
 
     # Split into train and test sets
     train_df, test_df = scenario.train_test_split(df, test_size=0.3);
