@@ -46,8 +46,7 @@ jobs:
       run: uv python install 3.12
     - name: Install dependencies
       run: |
-        uv sync
-        uv add --dev setuptools wheel build
+        uv sync --all-extras --dev
     - name: Build
       run: |
         uv run python -m build
