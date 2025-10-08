@@ -19,8 +19,12 @@ dependencies = [
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-packages = ["fairml_datasets"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["fairml_datasets*"]
+
+[tool.setuptools.package-data]
+"fairml_datasets.data.final" = ["*.csv"]
 
 [dependency-groups]
 dev = [
