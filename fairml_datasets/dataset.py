@@ -715,7 +715,22 @@ class Dataset:
                 target_column = self.get_target_column()
                 if sensitive_columns is None:
                     sensitive_columns = self.sensitive_columns
-                strat_columns = [target_column] + sensitive_columns
+
+                # Handle the case where sensitive columns were transformed
+                # Check if original sensitive columns exist, if not try sensitive_intersection
+                available_sensitive_columns = []
+                for col in sensitive_columns:
+                    if col in pandas_df.columns:
+                        available_sensitive_columns.append(col)
+
+                # If no original sensitive columns found, check for sensitive_intersection
+                if (
+                    not available_sensitive_columns
+                    and "sensitive_intersection" in pandas_df.columns
+                ):
+                    available_sensitive_columns = ["sensitive_intersection"]
+
+                strat_columns = [target_column] + available_sensitive_columns
 
                 # Check if columns exist in the dataframe
                 if not set(strat_columns).issubset(set(pandas_df.columns)):
@@ -723,6 +738,10 @@ class Dataset:
                     raise ValueError(
                         f"Target or sensitive columns not found in dataframe: {missing_columns}"
                     )
+
+                logger.info(
+                    f"Stratifying split by columns: {strat_columns}"
+                )
 
                 # Combine target and sensitive columns for stratification
                 if len(strat_columns) == 1:
