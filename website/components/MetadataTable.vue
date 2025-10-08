@@ -30,7 +30,7 @@ const columnDefs = computed(() => [
     pinned: "left",
     valueFormatter: (params) => params.value?.toString() || "N/A",
     cellRenderer: (params) => {
-      return `<a href="/datasets/${params.data.id}" class="dataset-name-link">
+      return `<a href="datasets/${params.data.id}" class="dataset-name-link">
                 <strong>${params.value}</strong>
               </a>`;
     },
