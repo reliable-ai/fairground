@@ -1,5 +1,6 @@
 import json
 import pytest
+from pathlib import Path
 from unittest.mock import patch
 import pandas as pd
 from aif360.datasets import BinaryLabelDataset
@@ -458,3 +459,119 @@ def test_train_test_split_reproducibility(
     # Verify splits are different
     assert not train1.equals(train3)
     assert not test1.equals(test3)
+
+
+def test_realworld_synth_dataset_load():
+    dataset = Dataset.from_id("synth")
+    df = dataset.load()
+
+    assert isinstance(df, pd.DataFrame)
+    assert not df.empty
+
+
+def test_realworld_synth_example_split():
+    # Get the dataset
+    dataset = Dataset.from_id("synth")
+
+    # Load as pandas DataFrame
+    df = dataset.load()  # or df = dataset.to_pandas()
+    print(f"Dataset shape: {df.shape}")
+
+    # Get the target column
+    target_column = dataset.get_target_column()
+    print(f"Target column: {target_column}")
+
+    # Get sensitive attributes (before transformation)
+    sensitive_columns_org = dataset.sensitive_columns
+
+    # Transform to e.g. impute missing data
+    df_transformed, transformation_info = dataset.transform(df)
+    # Sensitive columns may change due to transformation
+    sensitive_columns = transformation_info.sensitive_columns
+
+    # Split into train and test sets
+    train_df, test_df = dataset.train_test_split(df, test_size=0.3)
+
+    # Assertions to verify the operations work correctly
+    assert isinstance(df, pd.DataFrame)
+    assert not df.empty
+    assert target_column is not None
+    assert isinstance(sensitive_columns_org, list)
+    assert isinstance(df_transformed, pd.DataFrame)
+    assert transformation_info is not None
+    assert isinstance(sensitive_columns, list)
+    assert isinstance(train_df, pd.DataFrame)
+    assert isinstance(test_df, pd.DataFrame)
+    assert len(train_df) + len(test_df) == len(df)
+    assert (len(test_df) - int(len(df) * 0.3)) in (-1, 0, 1)
+
+
+def test_realworld_synth_dataset_train_test_val_split():
+    dataset = Dataset.from_id("synth")
+
+    # Load the dataset
+    df = dataset.load()
+
+    # Check sensitive attributes
+    print(f"Sensitive columns: {dataset.sensitive_columns}")
+
+    # Transform the dataset
+    df_transformed, info = dataset.transform(df)
+
+    # Create train/test/validation split
+    df_train, df_test, df_val = dataset.train_test_val_split(df_transformed)
+
+    # Assertions to verify the operations work correctly
+    assert isinstance(df, pd.DataFrame)
+    assert not df.empty
+    assert isinstance(dataset.sensitive_columns, list)
+    assert isinstance(df_transformed, pd.DataFrame)
+    assert info is not None
+    assert isinstance(df_train, pd.DataFrame)
+    assert isinstance(df_test, pd.DataFrame)
+    assert isinstance(df_val, pd.DataFrame)
+    assert len(df_train) + len(df_test) + len(df_val) == len(df_transformed)
+    # Verify that each split is non-empty
+    assert len(df_train) > 0
+    assert len(df_test) > 0
+    assert len(df_val) > 0
+    # Verify that all splits have the same columns
+    assert list(df_train.columns) == list(df_transformed.columns)
+    assert list(df_test.columns) == list(df_transformed.columns)
+    assert list(df_val.columns) == list(df_transformed.columns)
+
+
+@patch(
+    "fairml_datasets.file_handling.DATASET_CACHE_DIR", Path("tests/mock_cache/datasets")
+)
+@patch("fairml_datasets.dataset.DATASET_CACHE_DIR", Path("tests/mock_cache/datasets"))
+def test_realworld_folktables_acsincome_small_dataset_train_test_val_split():
+    dataset = Dataset.from_id("folktables_acsincome_small")
+
+    # Load the dataset
+    df = dataset.load()
+
+    # Transform the dataset
+    df_transformed, info = dataset.transform(df)
+
+    # Create train/test/validation split
+    df_train, df_test, df_val = dataset.train_test_val_split(df_transformed)
+
+    # Assertions to verify the operations work correctly
+    assert isinstance(df, pd.DataFrame)
+    assert not df.empty
+    assert isinstance(dataset.sensitive_columns, list)
+    assert isinstance(df_transformed, pd.DataFrame)
+    assert info is not None
+    assert isinstance(df_train, pd.DataFrame)
+    assert isinstance(df_test, pd.DataFrame)
+    assert isinstance(df_val, pd.DataFrame)
+    assert len(df_train) + len(df_test) + len(df_val) == len(df_transformed)
+    # Verify that each split is non-empty
+    assert len(df_train) > 0
+    assert len(df_test) > 0
+    assert len(df_val) > 0
+    # Verify that all splits have the same columns
+    assert list(df_train.columns) == list(df_transformed.columns)
+    assert list(df_test.columns) == list(df_transformed.columns)
+    assert list(df_val.columns) == list(df_transformed.columns)
