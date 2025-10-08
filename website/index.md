@@ -56,3 +56,6 @@ import MetadataTable from './components/MetadataTable.vue';
 }
 </style>
 
+Built with support from
+
+![BERD@NFDI](logo_berd.png)
