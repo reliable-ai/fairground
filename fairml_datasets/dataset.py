@@ -44,6 +44,7 @@ logging.basicConfig(
     datefmt="[%X]",
     handlers=[RichHandler(rich_tracebacks=True)],
 )
+logging.captureWarnings(True)
 
 
 class Dataset:
@@ -110,6 +111,16 @@ class Dataset:
             str: The name of the dataset
         """
         return self.info["dataset_name"]
+
+    def display_warnings(self) -> None:
+        """
+        Display dataset warning(s) if they exist in the annotations.
+        """
+        if "warning" in self.info and self.info["warning"] is not None:
+            warnings.warn(
+                f"[{self.dataset_id}]\n{self.info['warning']}",
+                UserWarning,
+            )
 
     def get_processing_script(
         self, processing_options: Dict[str, Any] = None
@@ -203,6 +214,9 @@ class Dataset:
         Returns:
             pd.DataFrame: The pandas dataframe with data at the specified stage of processing
         """
+        # Display any dataset warnings early in the loading process
+        self.display_warnings()
+
         if stage == "split":
             logger.info(
                 "Please use .split_dataset(), .train_test_split() or .train_test_val_split to split the dataset. 'Binarized' data will be returned from this function."
@@ -739,9 +753,7 @@ class Dataset:
                         f"Target or sensitive columns not found in dataframe: {missing_columns}"
                     )
 
-                logger.info(
-                    f"Stratifying split by columns: {strat_columns}"
-                )
+                logger.info(f"Stratifying split by columns: {strat_columns}")
 
                 # Combine target and sensitive columns for stratification
                 if len(strat_columns) == 1:

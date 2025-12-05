@@ -1,5 +1,6 @@
 import json
 import pytest
+import warnings
 from pathlib import Path
 from unittest.mock import patch
 import pandas as pd
@@ -25,6 +26,29 @@ def mock_info_valid():
             "default_scenario_sensitive_cols": "sensitive_col",
         },
         name="test_dataset",
+    )
+
+
+@pytest.fixture
+def mock_info_with_warning():
+    """Dataset info with a warning message."""
+    return pd.Series(
+        {
+            "dataset_name": "test_dataset_warning",
+            "filename_raw": None,
+            "download_url": "http://example.com/data.csv",
+            "is_zip": False,
+            "format": "csv",
+            "colnames": None,
+            "custom_download": False,
+            "typical_col_sensitive": json.dumps({"sensitive_col": "sensitive_value"}),
+            "typical_col_features": "-",
+            "typical_col_target": "target_col",
+            "target_lvl_good": "awesome",
+            "default_scenario_sensitive_cols": "sensitive_col",
+            "warning": "This dataset has known issues and should be used with caution.",
+        },
+        name="test_dataset_warning",
     )
 
 
@@ -539,6 +563,57 @@ def test_realworld_synth_dataset_train_test_val_split():
     assert list(df_train.columns) == list(df_transformed.columns)
     assert list(df_test.columns) == list(df_transformed.columns)
     assert list(df_val.columns) == list(df_transformed.columns)
+
+
+def test_display_warnings_with_warning(mock_info_with_warning):
+    """Test that display_warnings issues a UserWarning when warning field is present."""
+    dataset = Dataset(info=mock_info_with_warning)
+
+    with pytest.warns(UserWarning, match="This dataset has known issues"):
+        dataset.display_warnings()
+
+
+def test_display_warnings_without_warning(mock_info_valid):
+    """Test that display_warnings does not issue a warning when warning field is absent."""
+    dataset = Dataset(info=mock_info_valid)
+
+    # Should not raise any warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        dataset.display_warnings()
+
+
+def test_display_warnings_includes_dataset_id(mock_info_with_warning):
+    """Test that the warning message includes the dataset ID."""
+    dataset = Dataset(info=mock_info_with_warning)
+
+    with pytest.warns(UserWarning) as record:
+        dataset.display_warnings()
+
+    assert len(record) == 1
+    assert "test_dataset_warning" in str(record[0].message)
+    assert "This dataset has known issues" in str(record[0].message)
+
+
+@patch.object(Dataset, "load", return_value=pd.DataFrame({"col": [1, 2, 3]}))
+def test_load_displays_warning(mock_load, mock_info_with_warning):
+    """Test that load() method calls display_warnings()."""
+    dataset = Dataset(info=mock_info_with_warning)
+
+    # The warning should be displayed when display_warnings is called
+    with pytest.warns(UserWarning, match="This dataset has known issues"):
+        dataset.display_warnings()
+
+
+@patch.object(Dataset, "load", return_value=pd.DataFrame({"col": [1, 2, 3]}))
+def test_load_no_warning_without_warning_field(mock_load, mock_info_valid):
+    """Test that load() method does not raise warnings when warning field is absent."""
+    dataset = Dataset(info=mock_info_valid)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        # This should not raise any warnings from dataset warnings
+        dataset.display_warnings()
 
 
 @patch(
