@@ -43,3 +43,6 @@ docs = [
     "mkdocstrings[python]",
     "mkdocs-click",
 ]
+
+[project.scripts]
+fairml-datasets = "fairml_datasets.__main__:cli"
