@@ -74,6 +74,32 @@ python -m fairml_datasets export-datasets --stage prepared
 python -m fairml_datasets export-citations
 ```
 
+## Development
+
+Development dependencies are managed via `uv`. For information on how to install `uv`, please refer to [official installation instructions](https://docs.astral.sh/uv/getting-started/installation/).
+
+To install all dependencies, run:
+
+```bash
+uv sync --dev
+```
+
+### Formatting
+
+We're using `ruff` for formatting of code. You can autoformat and lint code by running: 
+
+```bash
+ruff check . --fix && ruff format .
+```
+
+### Tests
+
+Tests are located in the `tests/` directory. You can run all tests using `pytest`:
+
+```bash
+uv run pytest
+```
+
 # License
 
 Due to restrictions in some of the third-party code we include, this work is licensed under two licenses.
