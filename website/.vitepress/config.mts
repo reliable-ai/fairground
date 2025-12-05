@@ -79,6 +79,9 @@ export default defineConfig({
   title: "FairGround",
   description: "A framework and corpus of datasets for fairness research.",
   base: "/fairground/",
+  head: [
+    ['link', { rel: 'icon', type: 'image/png', href: '/fairground/favicon.png' }]
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
