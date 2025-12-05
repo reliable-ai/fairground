@@ -58,4 +58,4 @@ import MetadataTable from './components/MetadataTable.vue';
 
 Built with support from
 
-![BERD@NFDI](logo_berd.png)
+![BERD@NFDI](public/logo_berd.png)
