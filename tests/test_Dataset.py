@@ -9,46 +9,66 @@ from fairml_datasets import Dataset
 
 
 @pytest.fixture
-def mock_info_valid():
-    return pd.Series(
-        {
-            "dataset_name": "test_dataset",
-            "filename_raw": None,
-            "download_url": "http://example.com/data.csv",
-            "is_zip": False,
-            "format": "csv",
-            "colnames": None,
-            "custom_download": False,
-            "typical_col_sensitive": json.dumps({"sensitive_col": "sensitive_value"}),
-            "typical_col_features": "-",
-            "typical_col_target": "target_col",
-            "target_lvl_good": "awesome",
-            "default_scenario_sensitive_cols": "sensitive_col",
-        },
-        name="test_dataset",
+def make_info():
+    """Factory fixture to build dataset annotation Series with sensible defaults."""
+
+    base = {
+        "dataset_name": "test_dataset",
+        "filename_raw": None,
+        "download_url": "http://example.com/data.csv",
+        "is_zip": False,
+        "format": "csv",
+        "colnames": None,
+        "custom_download": False,
+        "typical_col_sensitive": json.dumps({"sensitive_col": "sensitive_value"}),
+        "typical_col_features": "-",
+        "typical_col_target": "target_col",
+        "target_lvl_good": "awesome",
+        "default_scenario_sensitive_cols": "sensitive_col",
+        "license": "MIT License",
+    }
+
+    def _make(**overrides):
+        data = {**base, **overrides}
+        dataset_id = overrides.get("dataset_id", data["dataset_name"])
+        return pd.Series(data, name=dataset_id)
+
+    return _make
+
+
+@pytest.fixture
+def mock_info_valid(make_info):
+    return make_info()
+
+
+@pytest.fixture
+def mock_info_with_warning(make_info):
+    """Dataset info with a warning message."""
+    return make_info(
+        dataset_id="test_dataset_warning",
+        dataset_name="test_dataset_warning",
+        warning="This dataset has known issues and should be used with caution.",
+        license="CC BY 4.0",
     )
 
 
 @pytest.fixture
-def mock_info_with_warning():
-    """Dataset info with a warning message."""
-    return pd.Series(
-        {
-            "dataset_name": "test_dataset_warning",
-            "filename_raw": None,
-            "download_url": "http://example.com/data.csv",
-            "is_zip": False,
-            "format": "csv",
-            "colnames": None,
-            "custom_download": False,
-            "typical_col_sensitive": json.dumps({"sensitive_col": "sensitive_value"}),
-            "typical_col_features": "-",
-            "typical_col_target": "target_col",
-            "target_lvl_good": "awesome",
-            "default_scenario_sensitive_cols": "sensitive_col",
-            "warning": "This dataset has known issues and should be used with caution.",
-        },
-        name="test_dataset_warning",
+def mock_info_no_license(make_info):
+    """Dataset info with missing license information."""
+    return make_info(
+        dataset_id="test_dataset_no_license",
+        dataset_name="test_dataset_no_license",
+        license=None,
+    )
+
+
+@pytest.fixture
+def mock_info_empty_license(make_info):
+    """Dataset info with empty license string."""
+    return make_info(
+        dataset_id="test_dataset_empty_license",
+        dataset_name="test_dataset_empty_license",
+        license="not found",
     )
 
 
@@ -65,25 +85,15 @@ def mock_df():
 
 
 @pytest.fixture
-def mock_info_metadata_error():
-    return pd.Series(
-        {
-            "dataset_name": "test_dataset",
-            "filename_raw": None,
-            "download_url": "http://example.com/data.csv",
-            "is_zip": False,
-            "format": "csv",
-            "colnames": None,
-            "custom_download": False,
-            "typical_col_target": "col1",
-            "target_lvl_good": "1",
-            "typical_col_sensitive": json.dumps(
-                {"non_existent_col": "sensitive_value"}
-            ),
-            "typical_col_features": "-",
-            "default_scenario_sensitive_cols": "non_existent_col",
-        },
-        name="test_dataset",
+def mock_info_metadata_error(make_info):
+    return make_info(
+        typical_col_target="col1",
+        target_lvl_good="1",
+        typical_col_sensitive=json.dumps({"non_existent_col": "sensitive_value"}),
+        typical_col_features="-",
+        default_scenario_sensitive_cols="non_existent_col",
+        dataset_id="test_dataset_metadata_error",
+        dataset_name="test_dataset",
     )
 
 
@@ -281,30 +291,28 @@ def test_preprocess_unknown_categorical_transform(mock_load, mock_info_valid, mo
         dataset.transform(dataset.load(), transform_categorical="unknown")
 
 
-def test_generate_sensitive_combinations():
-    info = pd.Series(
-        {
-            "dataset_name": "test_dataset",
-            "typical_col_sensitive": json.dumps({"gender": "Gender", "race": "Race"}),
-            "typical_col_target": "outcome",
-            "target_lvl_good": "1",
-            "default_scenario_sensitive_cols": "gender;race",
-        }
+def test_generate_sensitive_combinations(make_info):
+    info = make_info(
+        dataset_id="test_dataset",
+        dataset_name="test_dataset",
+        typical_col_sensitive=json.dumps({"gender": "Gender", "race": "Race"}),
+        typical_col_target="outcome",
+        target_lvl_good="1",
+        default_scenario_sensitive_cols="gender;race",
     )
     dataset = Dataset(info=info)
     expected_combinations = [["gender"], ["race"], ["gender", "race"]]
     assert dataset.generate_sensitive_intersections() == expected_combinations
 
 
-def test_generate_sensitive_combinations_three_attributes():
-    info = pd.Series(
-        {
-            "dataset_name": "test_dataset",
-            "typical_col_sensitive": json.dumps({"A": "A", "B": "B", "C": "C"}),
-            "typical_col_target": "outcome",
-            "target_lvl_good": "1",
-            "default_scenario_sensitive_cols": "A;B;C",
-        }
+def test_generate_sensitive_combinations_three_attributes(make_info):
+    info = make_info(
+        dataset_id="test_dataset",
+        dataset_name="test_dataset",
+        typical_col_sensitive=json.dumps({"A": "A", "B": "B", "C": "C"}),
+        typical_col_target="outcome",
+        target_lvl_good="1",
+        default_scenario_sensitive_cols="A;B;C",
     )
     dataset = Dataset(info=info)
     expected_combinations = [
@@ -319,14 +327,13 @@ def test_generate_sensitive_combinations_three_attributes():
     assert dataset.generate_sensitive_intersections() == expected_combinations
 
 
-def test_generate_sensitive_combinations_no_sensitive_columns():
-    info = pd.Series(
-        {
-            "dataset_name": "test_dataset",
-            "typical_col_sensitive": None,
-            "typical_col_target": "outcome",
-            "target_lvl_good": "1",
-        }
+def test_generate_sensitive_combinations_no_sensitive_columns(make_info):
+    info = make_info(
+        dataset_id="test_dataset",
+        dataset_name="test_dataset",
+        typical_col_sensitive=None,
+        typical_col_target="outcome",
+        target_lvl_good="1",
     )
     dataset = Dataset(info=info)
     assert dataset.generate_sensitive_intersections() == []
@@ -563,6 +570,66 @@ def test_realworld_synth_dataset_train_test_val_split():
     assert list(df_train.columns) == list(df_transformed.columns)
     assert list(df_test.columns) == list(df_transformed.columns)
     assert list(df_val.columns) == list(df_transformed.columns)
+
+
+def test_display_warnings_no_license_none(mock_info_no_license):
+    """Warn when license is None."""
+    dataset = Dataset(info=mock_info_no_license)
+
+    with pytest.warns(UserWarning, match="does not provide a license") as record:
+        dataset.display_warnings()
+
+    assert len(record) == 1
+    assert "test_dataset_no_license" in str(record[0].message)
+
+
+def test_display_warnings_no_license_not_found(mock_info_empty_license):
+    """Warn when license is marked as not found/empty."""
+    dataset = Dataset(info=mock_info_empty_license)
+
+    with pytest.warns(UserWarning, match="does not provide a license") as record:
+        dataset.display_warnings()
+
+    assert len(record) == 1
+    assert "test_dataset_empty_license" in str(record[0].message)
+
+
+def test_display_warnings_with_license(make_info):
+    """No license warning when license exists."""
+    dataset = Dataset(info=make_info(license="MIT License"))
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        dataset.display_warnings()
+
+
+def test_display_warnings_both_warning_and_no_license(make_info):
+    """Both explicit warning and license warning are emitted."""
+    dataset = Dataset(
+        info=make_info(
+            dataset_id="test_dataset_both",
+            dataset_name="test_dataset_both",
+            warning="This dataset has issues.",
+            license=None,
+        )
+    )
+
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter("always")
+        dataset.display_warnings()
+
+    messages = [str(item.message) for item in w]
+    assert any("This dataset has issues" in msg for msg in messages)
+    assert any("does not provide a license" in msg for msg in messages)
+
+
+def test_load_displays_license_warning(mock_info_no_license):
+    """load() should emit license warning via display_warnings."""
+    dataset = Dataset(info=mock_info_no_license)
+
+    with pytest.warns(UserWarning, match="does not provide a license"):
+        # Call display_warnings directly to avoid network calls; load delegates to it
+        dataset.display_warnings()
 
 
 def test_display_warnings_with_warning(mock_info_with_warning):

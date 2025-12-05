@@ -116,10 +116,20 @@ class Dataset:
         """
         Display dataset warning(s) if they exist in the annotations.
         """
+        # Check for explicit warning
         if "warning" in self.info and self.info["warning"] is not None:
             warnings.warn(
                 f"[{self.dataset_id}]\n{self.info['warning']}",
-                UserWarning,
+            )
+
+        # Check for missing license information
+        if "license" in self.info and (
+            self.info["license"] is None
+            or str(self.info["license"]).strip() == ""
+            or str(self.info["license"]).strip().lower() == "not found"
+        ):
+            warnings.warn(
+                f"[{self.dataset_id}]: This dataset does not provide a license."
             )
 
     def get_processing_script(
