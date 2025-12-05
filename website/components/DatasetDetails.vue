@@ -73,6 +73,15 @@ const handleCodeCopy = () => {
       </div>
     </div>
 
+    <!-- Warning for dataset annotation -->
+    <div v-if="dataset.ann_warning" class="dataset-warning warning custom-block mb-4">
+      <strong>⚠️ Warning:</strong> {{ dataset.ann_warning }}
+    </div>
+    <!-- Warning for missing license -->
+    <div v-if="!dataset.ann_license || dataset.ann_license === 'not found'" class="dataset-warning warning custom-block mb-4">
+      <strong>⚠️ Warning:</strong> This dataset is missing license information.
+    </div>
+
     <div class="dataset-tabs">
       <button
         :class="{ active: activeTab === 'overview' }"
@@ -847,4 +856,16 @@ const handleCodeCopy = () => {
     grid-template-columns: 1fr;
   }
 }
+.dataset-warning {
+  padding: 16px;
+  background-color: var(--vp-c-warning-soft);
+  border-radius: 8px;
+  color: var(--vp-c-warning-dark, #b26a00);
+  margin-bottom: 16px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 </style>
