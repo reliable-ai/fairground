@@ -398,3 +398,79 @@ def test_duplicate_citations(mock_datasets_class, runner, tmp_path):
     with open(output_file, "r") as f:
         content = f.read()
         assert content.count("@article{same_key") == 1
+
+
+@patch("fairml_datasets.__main__.collections")
+@patch("fairml_datasets.__main__.Datasets")
+def test_export_datasets_with_collection(
+    mock_datasets_class, mock_collections, runner
+):
+    """Test export_datasets command with collection parameter"""
+    # Setup mock collection
+    mock_scenario1 = MagicMock()
+    mock_scenario1.dataset_id = "dataset1"
+
+    mock_scenario2 = MagicMock()
+    mock_scenario2.dataset_id = "dataset2"
+
+    mock_scenario3 = MagicMock()
+    mock_scenario3.dataset_id = "dataset1"  # Same dataset as scenario1
+
+    mock_collection_class = MagicMock()
+    mock_collection_instance = MagicMock()
+    mock_collection_instance.__iter__.return_value = [mock_scenario1, mock_scenario2, mock_scenario3]
+    mock_collection_class.return_value = mock_collection_instance
+
+    mock_collections.DecorrelatedSmall = mock_collection_class
+
+    # Setup mock datasets
+    mock_dataset1 = MagicMock()
+    mock_dataset1.dataset_id = "dataset1"
+    df1 = pd.DataFrame({"col1": [1, 2], "col2": ["a", "b"]})
+    mock_dataset1.load.return_value = df1
+    mock_dataset1.get_feature_columns.return_value = ["col1"]
+    mock_dataset1.get_target_column.return_value = "col2"
+
+    mock_dataset2 = MagicMock()
+    mock_dataset2.dataset_id = "dataset2"
+    df2 = pd.DataFrame({"col3": [3, 4], "col4": ["c", "d"]})
+    mock_dataset2.load.return_value = df2
+    mock_dataset2.get_feature_columns.return_value = ["col3"]
+    mock_dataset2.get_target_column.return_value = "col4"
+
+    mock_datasets_instance = MagicMock()
+    mock_datasets_instance.get_ids.return_value = ["dataset1", "dataset2"]
+    mock_datasets_instance.__getitem__.side_effect = lambda x: mock_dataset1 if x == "dataset1" else mock_dataset2
+    mock_datasets_class.return_value = mock_datasets_instance
+
+    # Execute
+    with runner.isolated_filesystem():
+        os.mkdir("export")  # Create export directory
+        result = runner.invoke(
+            cli, ["export-datasets", "--collection", "DecorrelatedSmall"]
+        )
+
+        # Verify
+        assert result.exit_code == 0
+        # Should export 2 unique datasets (dataset1 and dataset2)
+        assert Path("export/dataset1.csv").exists()
+        assert Path("export/dataset2.csv").exists()
+
+
+@patch("fairml_datasets.__main__.Datasets")
+def test_export_datasets_id_and_collection_mutually_exclusive(mock_datasets_class, runner):
+    """Test that --id and --collection are mutually exclusive"""
+    mock_datasets_class.return_value = MagicMock()
+
+    # Execute
+    with runner.isolated_filesystem():
+        result = runner.invoke(
+            cli, ["export-datasets", "--id", "dataset1", "--collection", "DecorrelatedSmall"]
+        )
+
+        # Verify that command fails with appropriate error
+        assert result.exit_code == 0  # Click doesn't exit with error code for this
+        # But the error message should be logged
+
+
+

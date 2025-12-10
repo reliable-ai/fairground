@@ -16,6 +16,7 @@ from pathlib import Path
 import pandas as pd
 from fairml_datasets.processing import annotations
 from fairml_datasets import Datasets
+from fairml_datasets import collections
 from rich.progress import Progress
 
 
@@ -143,19 +144,41 @@ def metadata(file, id, inclue_large_datasets, type):
     help="Export only a single dataset.",
 )
 @click.option(
+    "--collection",
+    default=None,
+    type=click.Choice(
+        [
+            "DecorrelatedSmall",
+            "DecorrelatedLarge",
+            "PermissivelyLicensedSmall",
+            "PermissivelyLicensedLarge",
+            "PermissivelyLicensedFull",
+            "GeographicSmall",
+            "GeographicLarge",
+            "GeographicFull",
+        ]
+    ),
+    help="Export all datasets from a specific collection.",
+)
+@click.option(
     "--inclue-large-datasets",
     is_flag=True,
-    help="Include large datasets in the export.",
+    help="Include large datasets in the export (always applied for collections).",
 )
 @click.option(
     "--include-usage-info",
     is_flag=True,
     help="Whether to also export information regarding the role of different columns e.g. which ones are features, sensitive and target.",
 )
-def export_datasets(stage, id, inclue_large_datasets, include_usage_info):
+def export_datasets(stage, id, collection, inclue_large_datasets, include_usage_info):
     """
     Export datasets as files.
     """
+    # Validate mutual exclusivity
+    if id and collection:
+        logger.error("Cannot specify both --id and --collection. Please use only one.")
+        return
+
     target_dir = Path("./export")
     if target_dir.exists():
         logger.warning(f"Target directory '{target_dir}' already exists")
@@ -166,6 +189,17 @@ def export_datasets(stage, id, inclue_large_datasets, include_usage_info):
     # Filter datasets if id is provided
     if id:
         datasets = [datasets[id]]
+    elif collection:
+        # Get the collection class and instantiate it
+        collection_class = getattr(collections, collection)
+        collection_instance = collection_class()
+
+        # Extract unique dataset IDs from scenarios
+        dataset_ids = list(set(scenario.dataset_id for scenario in collection_instance))
+        logger.info(f"Exporting {len(dataset_ids)} unique datasets from collection '{collection}'")
+
+        # Filter datasets to only those in the collection
+        datasets = [datasets[dataset_id] for dataset_id in dataset_ids if dataset_id in datasets.get_ids()]
 
     with Progress() as progress:
         task = progress.add_task("Exporting datasets", total=len(datasets))
