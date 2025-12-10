@@ -163,7 +163,7 @@ def metadata(file, id, inclue_large_datasets, type):
 @click.option(
     "--inclue-large-datasets",
     is_flag=True,
-    help="Include large datasets in the export (always applied for collections).",
+    help="Include large datasets in the export.",
 )
 @click.option(
     "--include-usage-info",
