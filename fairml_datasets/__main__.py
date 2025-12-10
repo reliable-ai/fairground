@@ -46,7 +46,7 @@ def cli(debug):
     help="Generate metadata for only a single dataset.",
 )
 @click.option(
-    "--inclue-large-datasets",
+    "--include-large-datasets",
     is_flag=True,
     help="Include large datasets in the metadata generation (only used if descriptives are computed).",
 )
