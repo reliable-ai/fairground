@@ -170,7 +170,20 @@ def metadata(file, id, inclue_large_datasets, type):
     is_flag=True,
     help="Whether to also export information regarding the role of different columns e.g. which ones are features, sensitive and target.",
 )
-def export_datasets(stage, id, collection, inclue_large_datasets, include_usage_info):
+@click.option(
+    "-o",
+    "--output-path",
+    default="./export",
+    help="Directory path where the exported datasets will be saved.",
+)
+@click.option(
+    "-f",
+    "--format",
+    default="csv",
+    type=click.Choice(["csv", "parquet"]),
+    help="Output format for the exported datasets.",
+)
+def export_datasets(stage, id, collection, inclue_large_datasets, include_usage_info, output_path, format):
     """
     Export datasets as files.
     """
@@ -179,10 +192,13 @@ def export_datasets(stage, id, collection, inclue_large_datasets, include_usage_
         logger.error("Cannot specify both --id and --collection. Please use only one.")
         return
 
-    target_dir = Path("./export")
+    target_dir = Path(output_path)
     if target_dir.exists():
         logger.warning(f"Target directory '{target_dir}' already exists")
     target_dir.mkdir(exist_ok=True)
+
+    # Determine file extension based on format
+    file_ext = f".{format}"
 
     datasets = Datasets(inclue_large_datasets=inclue_large_datasets)
 
@@ -224,23 +240,39 @@ def export_datasets(stage, id, collection, inclue_large_datasets, include_usage_
                     train, test, val = dataset.train_test_val_split(df)
                     df = None  # Reset df so nothing will be exported on top
 
-                    train.to_csv(
-                        target_dir / f"{dataset.dataset_id}--train.csv", index=False
-                    )
-                    test.to_csv(
-                        target_dir / f"{dataset.dataset_id}--test.csv", index=False
-                    )
-                    val.to_csv(
-                        target_dir / f"{dataset.dataset_id}--val.csv", index=False
-                    )
+                    if format == "csv":
+                        train.to_csv(
+                            target_dir / f"{dataset.dataset_id}--train{file_ext}", index=False
+                        )
+                        test.to_csv(
+                            target_dir / f"{dataset.dataset_id}--test{file_ext}", index=False
+                        )
+                        val.to_csv(
+                            target_dir / f"{dataset.dataset_id}--val{file_ext}", index=False
+                        )
+                    else:  # parquet
+                        train.to_parquet(
+                            target_dir / f"{dataset.dataset_id}--train{file_ext}", index=False
+                        )
+                        test.to_parquet(
+                            target_dir / f"{dataset.dataset_id}--test{file_ext}", index=False
+                        )
+                        val.to_parquet(
+                            target_dir / f"{dataset.dataset_id}--val{file_ext}", index=False
+                        )
                     logger.info(
-                        f"Written files to {[target_dir / f'{dataset.dataset_id}--{suffix}.csv' for suffix in ['X', 'y', 's']]}"
+                        f"Written files to {[target_dir / f'{dataset.dataset_id}--{suffix}{file_ext}' for suffix in ['train', 'test', 'val']]}"
                     )
 
                 # Export file
                 if "df" in locals() and df is not None:
-                    filepath = target_dir / f"{dataset.dataset_id}.csv"
-                    df.to_csv(filepath, index=False)
+                    filepath = target_dir / f"{dataset.dataset_id}{file_ext}"
+                    if format == "csv":
+                        df.to_csv(filepath, index=False)
+                    elif format == "parquet":
+                        df.to_parquet(filepath, index=False)
+                    else:
+                        raise ValueError(f"Unsupported format: {format}")
                     logger.info(f"Written file to {filepath}")
 
                 # Export information on which roles columns have

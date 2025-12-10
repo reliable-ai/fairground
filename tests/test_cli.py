@@ -443,7 +443,6 @@ def test_export_datasets_with_collection(
     mock_datasets_instance.__getitem__.side_effect = lambda x: mock_dataset1 if x == "dataset1" else mock_dataset2
     mock_datasets_class.return_value = mock_datasets_instance
 
-    # Execute
     with runner.isolated_filesystem():
         os.mkdir("export")  # Create export directory
         result = runner.invoke(
@@ -457,12 +456,23 @@ def test_export_datasets_with_collection(
         assert Path("export/dataset2.csv").exists()
 
 
+    with runner.isolated_filesystem():
+        os.mkdir("export")  # Create export directory
+        result = runner.invoke(
+            cli, ["export-datasets", "--collection", "DecorrelatedSmall", "--format", "parquet"]
+        )
+
+        # Verify
+        assert result.exit_code == 0
+        # Should export 2 unique datasets (dataset1 and dataset2)
+        assert Path("export/dataset1.parquet").exists()
+        assert Path("export/dataset2.parquet").exists()
+
 @patch("fairml_datasets.__main__.Datasets")
 def test_export_datasets_id_and_collection_mutually_exclusive(mock_datasets_class, runner):
     """Test that --id and --collection are mutually exclusive"""
     mock_datasets_class.return_value = MagicMock()
 
-    # Execute
     with runner.isolated_filesystem():
         result = runner.invoke(
             cli, ["export-datasets", "--id", "dataset1", "--collection", "DecorrelatedSmall"]
