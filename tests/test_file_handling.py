@@ -127,11 +127,14 @@ def test_search_zip_archive(temp_zip_file):
 
 def test_search_nested_zip_archives(temp_zip_file):
     """Test searching for files in nested zip archives."""
-    results = search_nested_zip_archives(temp_zip_file, "nested_test.txt")
-    assert len(results) == 1
-    zip_path, file_name = results[0]
-    assert isinstance(zip_path, Path)
-    assert file_name == "nested_test.txt"
+    with tempfile.TemporaryDirectory() as temp_dir:
+        results = search_nested_zip_archives(
+            temp_zip_file, "nested_test.txt", Path(temp_dir)
+        )
+        assert len(results) == 1
+        zip_path, file_name = results[0]
+        assert isinstance(zip_path, Path)
+        assert file_name == "nested_test.txt"
 
 
 def test_extract_result(temp_zip_file):
