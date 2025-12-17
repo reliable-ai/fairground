@@ -1,6 +1,6 @@
 [project]
 name = "fairml-datasets"
-version = "0.2.2"
+version = "0.2.3"
 description = "A package for managing and processing datasets for fairness research in machine learning"
 readme = "README.md"
 license = {text = "CC BY 4.0"}
