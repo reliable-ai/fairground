@@ -56,6 +56,13 @@ train_df, test_df = dataset.train_test_split(df, test_size=0.3)
 `;
 });
 
+const cliExample = computed(() => {
+  return `python fairml_datasets export-datasets --id=${props.id}
+
+# Or via uv
+uv run fairml_datasets export-datasets --id=${props.id}`;
+});
+
 const handleCodeCopy = () => {
   codeCopied.value = true;
 
@@ -154,6 +161,16 @@ const handleCodeCopy = () => {
         <HighlightedCode
           :code="pythonExample"
           language="python"
+          @copy="handleCodeCopy"
+        />
+      </div>
+
+      <div class="dataset-section">
+        <h2>CLI Example</h2>
+        <p>You can also export this dataset using the command line:</p>
+        <HighlightedCode
+          :code="cliExample"
+          language="bash"
           @copy="handleCodeCopy"
         />
       </div>
