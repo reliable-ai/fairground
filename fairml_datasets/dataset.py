@@ -4,6 +4,7 @@ import warnings
 import numpy as np
 import pandas as pd
 import logging
+import tempfile
 from typing import Dict, List, Literal, Optional, Union, Tuple, Any
 from aif360.datasets import BinaryLabelDataset
 from rich.logging import RichHandler
@@ -22,7 +23,6 @@ from .file_handling import (
     download_dataset,
     load_dataset,
     DATASET_CACHE_DIR,
-    make_temp_directory,
 )
 from .processing.datasets import (
     get_processing_script,
@@ -255,7 +255,8 @@ class Dataset:
                 self.info["download_url"] is not None
             ), "Dataset is missing download URL."
 
-            with make_temp_directory() as temp_dir:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                temp_dir = Path(temp_dir)
                 cache_download = cache_at == "downloaded"
                 download_dir = temp_dir if not cache_download else DOWNLOAD_CACHE_DIR
 

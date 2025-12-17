@@ -1,8 +1,8 @@
 from typing import List
+import tempfile
 
 from fairml_datasets.file_handling import (
     extract_result,
-    make_temp_directory,
     search_zip_archive,
 )
 from .. import LoadingScript, PreparationScript
@@ -68,7 +68,8 @@ class Script(LoadingScript, PreparationScript):
         result_2011 = search_zip_archive(locations[0], csv_names[0])
         result_2012 = search_zip_archive(locations[1], csv_names[1])
 
-        with make_temp_directory() as temp_dir:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_dir = Path(temp_dir)
             target_dir = temp_dir
 
             # Extract CSV files

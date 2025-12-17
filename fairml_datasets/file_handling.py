@@ -7,7 +7,6 @@ various formats into pandas DataFrames.
 """
 
 import tempfile
-import contextlib
 import shutil
 from pathlib import Path
 from urllib.request import urlretrieve
@@ -26,21 +25,6 @@ logger = logging.getLogger(__name__)
 ROOT_CACHE_DIR = Path("cache")
 DATASET_CACHE_DIR = ROOT_CACHE_DIR / "datasets"
 DOWNLOAD_CACHE_DIR = ROOT_CACHE_DIR / "downloads"
-
-
-@contextlib.contextmanager
-def make_temp_directory() -> Generator[Path, None, None]:
-    """
-    Context manager that creates a temporary directory and cleans it up when done.
-
-    Yields:
-        Path: Path to the temporary directory
-    """
-    temp_dir = tempfile.mkdtemp()
-    try:
-        yield Path(temp_dir)
-    finally:
-        shutil.rmtree(temp_dir)
 
 
 def _download_file(url: str, destination: Path):
@@ -90,7 +74,8 @@ def download_dataset(
         is_zip or len(filenames) == len(urls)
     ), f"The number of filenames has to match the number of URLs for non-zip archives. ({filenames}|{urls})"
 
-    with make_temp_directory() as temp_dir:
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_dir = Path(temp_dir)
 
         def filename_to_path(filename):
             return target_directory / filename
@@ -335,7 +320,8 @@ def search_nested_zip_archives(
     nested_zips = search_zip_archive(zip_path, "\.zip$", regex=True)
 
     # Extract the nested zips
-    with make_temp_directory() as temp_dir:
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_dir = Path(temp_dir)
         results = []
         for nested_zip in nested_zips:
             # Extract the nested zip
