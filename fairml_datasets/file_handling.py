@@ -113,7 +113,9 @@ def download_dataset(
 
                 results = search_zip_archive(zip_path, filename)
                 if len(results) == 0:
-                    results = search_nested_zip_archives(zip_path, filename)
+                    results = search_nested_zip_archives(
+                        zip_path, filename, temp_dir / "nested_zips"
+                    )
 
                 if len(results) != 1:
                     raise ValueError(
@@ -301,7 +303,7 @@ def search_zip_archive(
 
 
 def search_nested_zip_archives(
-    zip_path: Path, search_pattern: str
+    zip_path: Path, search_pattern: str, temp_dir: Path
 ) -> List[ZipSearchResult]:
     """
     Searches for a file in nested zip archives (i.e. zip archives IN a zip archive).
@@ -318,16 +320,14 @@ def search_nested_zip_archives(
     nested_zips = search_zip_archive(zip_path, "\.zip$", regex=True)
 
     # Extract the nested zips
-    with tempfile.TemporaryDirectory() as temp_dir:
-        temp_dir = Path(temp_dir)
-        results = []
-        for nested_zip in nested_zips:
-            # Extract the nested zip
-            extracted_nested_zip = extract_result(nested_zip, temp_dir)
-            # Search the just-now-extracted nested zip
-            result = search_zip_archive(extracted_nested_zip, search_pattern)
-            results += result
-        return results
+    results = []
+    for nested_zip in nested_zips:
+        # Extract the nested zip
+        extracted_nested_zip = extract_result(nested_zip, temp_dir)
+        # Search the just-now-extracted nested zip
+        result = search_zip_archive(extracted_nested_zip, search_pattern)
+        results += result
+    return results
 
 
 def extract_result(
