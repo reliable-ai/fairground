@@ -17,7 +17,6 @@ from fairml_datasets.file_handling import (
     search_nested_zip_archives,
     extract_result,
     load_dataset,
-    make_temp_directory,
 )
 
 
@@ -62,23 +61,6 @@ def temp_zip_file():
 
     # Cleanup
     shutil.rmtree(temp_dir)
-
-
-def test_make_temp_directory():
-    """Test the make_temp_directory context manager."""
-    with make_temp_directory() as temp_dir:
-        assert temp_dir.exists()
-        assert temp_dir.is_dir()
-
-        # Create a file in the temp directory
-        test_file = temp_dir / "test.txt"
-        with open(test_file, "w") as f:
-            f.write("test")
-
-        assert test_file.exists()
-
-    # After exiting the context, the directory should be deleted
-    assert not temp_dir.exists()
 
 
 def test_load_text_file(mock_csv_content):
@@ -154,7 +136,8 @@ def test_search_nested_zip_archives(temp_zip_file):
 
 def test_extract_result(temp_zip_file):
     """Test extracting a file from a zip archive."""
-    with make_temp_directory() as temp_dir:
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_dir = Path(temp_dir)
         # Find the test.txt file
         results = search_zip_archive(temp_zip_file, "test.txt")
         assert len(results) == 1
