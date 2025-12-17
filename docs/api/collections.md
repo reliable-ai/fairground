@@ -30,7 +30,7 @@ The `collections` module provides predefined collections of fairness scenarios, 
 from fairml_datasets.collections import Corpus
 
 # Create the corpus (all available datasets and their scenarios)
-corpus = Corpus(inclue_large_datasets=True)
+corpus = Corpus(include_large_datasets=True)
 
 # Iterate through all scenarios in the corpus
 for scenario in corpus:

@@ -22,7 +22,7 @@ class Datasets:
     def __init__(
         self,
         ids: Optional[List[str]] = None,
-        inclue_large_datasets: bool = False,
+        include_large_datasets: bool = False,
         df_info: Optional[pd.DataFrame] = None,
     ) -> None:
         """
@@ -30,7 +30,7 @@ class Datasets:
 
         Args:
             ids: Optional list of dataset IDs to include
-            inclue_large_datasets: Whether to include datasets marked as 'large'
+            include_large_datasets: Whether to include datasets marked as 'large'
             df_info: Optional DataFrame containing dataset annotations (will be loaded if None)
         """
         # Load annotations (these can optionally be provided, but it's not such a common usecase)
@@ -45,7 +45,7 @@ class Datasets:
             df_info = df_info.loc[ids]
 
         # Filter out large datasets if needed
-        if ids is None and not inclue_large_datasets:
+        if ids is None and not include_large_datasets:
             df_info = df_info[~df_info["is_large"]]
 
         self.df_info = df_info

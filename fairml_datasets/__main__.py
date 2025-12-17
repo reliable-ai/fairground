@@ -56,7 +56,7 @@ def cli(debug):
     type=click.Choice(["annotations", "descriptives", "all"]),
     help="Type of metadata to generate (annotations, descriptives, or both).",
 )
-def metadata(file, id, inclue_large_datasets, type):
+def metadata(file, id, include_large_datasets, type):
     """
     Generate and save metadata for the datasets.
     """
@@ -77,7 +77,7 @@ def metadata(file, id, inclue_large_datasets, type):
     elif type == "descriptives":
         # Generate descriptive metadata based on contents of datasets
         datasets = Datasets(
-            df_info=annotations_df, inclue_large_datasets=inclue_large_datasets
+            df_info=annotations_df, include_large_datasets=include_large_datasets
         )
 
         if id:
@@ -93,7 +93,7 @@ def metadata(file, id, inclue_large_datasets, type):
         # Generate both and merge them
         # First get descriptives
         datasets = Datasets(
-            df_info=annotations_df, inclue_large_datasets=inclue_large_datasets
+            df_info=annotations_df, include_large_datasets=include_large_datasets
         )
 
         if id:
@@ -161,7 +161,7 @@ def metadata(file, id, inclue_large_datasets, type):
     help="Export all datasets from a specific collection.",
 )
 @click.option(
-    "--inclue-large-datasets",
+    "--include-large-datasets",
     is_flag=True,
     help="Include large datasets in the export.",
 )
@@ -183,7 +183,15 @@ def metadata(file, id, inclue_large_datasets, type):
     type=click.Choice(["csv", "parquet"]),
     help="Output format for the exported datasets.",
 )
-def export_datasets(stage, id, collection, inclue_large_datasets, include_usage_info, output_path, format):
+def export_datasets(
+    stage,
+    id,
+    collection,
+    include_large_datasets,
+    include_usage_info,
+    output_path,
+    format,
+):
     """
     Export datasets as files.
     """
@@ -200,7 +208,7 @@ def export_datasets(stage, id, collection, inclue_large_datasets, include_usage_
     # Determine file extension based on format
     file_ext = f".{format}"
 
-    datasets = Datasets(inclue_large_datasets=inclue_large_datasets)
+    datasets = Datasets(include_large_datasets=include_large_datasets)
 
     # Filter datasets if id is provided
     if id:
@@ -212,10 +220,16 @@ def export_datasets(stage, id, collection, inclue_large_datasets, include_usage_
 
         # Extract unique dataset IDs from scenarios
         dataset_ids = list(set(scenario.dataset_id for scenario in collection_instance))
-        logger.info(f"Exporting {len(dataset_ids)} unique datasets from collection '{collection}'")
+        logger.info(
+            f"Exporting {len(dataset_ids)} unique datasets from collection '{collection}'"
+        )
 
         # Filter datasets to only those in the collection
-        datasets = [datasets[dataset_id] for dataset_id in dataset_ids if dataset_id in datasets.get_ids()]
+        datasets = [
+            datasets[dataset_id]
+            for dataset_id in dataset_ids
+            if dataset_id in datasets.get_ids()
+        ]
 
     with Progress() as progress:
         task = progress.add_task("Exporting datasets", total=len(datasets))
@@ -242,23 +256,29 @@ def export_datasets(stage, id, collection, inclue_large_datasets, include_usage_
 
                     if format == "csv":
                         train.to_csv(
-                            target_dir / f"{dataset.dataset_id}--train{file_ext}", index=False
+                            target_dir / f"{dataset.dataset_id}--train{file_ext}",
+                            index=False,
                         )
                         test.to_csv(
-                            target_dir / f"{dataset.dataset_id}--test{file_ext}", index=False
+                            target_dir / f"{dataset.dataset_id}--test{file_ext}",
+                            index=False,
                         )
                         val.to_csv(
-                            target_dir / f"{dataset.dataset_id}--val{file_ext}", index=False
+                            target_dir / f"{dataset.dataset_id}--val{file_ext}",
+                            index=False,
                         )
                     else:  # parquet
                         train.to_parquet(
-                            target_dir / f"{dataset.dataset_id}--train{file_ext}", index=False
+                            target_dir / f"{dataset.dataset_id}--train{file_ext}",
+                            index=False,
                         )
                         test.to_parquet(
-                            target_dir / f"{dataset.dataset_id}--test{file_ext}", index=False
+                            target_dir / f"{dataset.dataset_id}--test{file_ext}",
+                            index=False,
                         )
                         val.to_parquet(
-                            target_dir / f"{dataset.dataset_id}--val{file_ext}", index=False
+                            target_dir / f"{dataset.dataset_id}--val{file_ext}",
+                            index=False,
                         )
                     logger.info(
                         f"Written files to {[target_dir / f'{dataset.dataset_id}--{suffix}{file_ext}' for suffix in ['train', 'test', 'val']]}"

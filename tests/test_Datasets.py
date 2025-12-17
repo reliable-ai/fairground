@@ -39,7 +39,7 @@ def test_datasets_init_include_large(mock_load, mock_annotations_data):
     """Test initialization with large datasets included."""
     mock_load.return_value = mock_annotations_data
 
-    datasets = Datasets(inclue_large_datasets=True)
+    datasets = Datasets(include_large_datasets=True)
 
     # Should include all datasets
     assert len(datasets) == 4

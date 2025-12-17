@@ -52,15 +52,15 @@ class Corpus(Collection):
     providing a comprehensive set for fairness analysis across the entire corpus.
     """
 
-    def __init__(self, inclue_large_datasets=True):
+    def __init__(self, include_large_datasets=True):
         """
         Initialize the Corpus with all available datasets and scenarios.
 
         Args:
-            inclue_large_datasets: Whether to include datasets marked as 'large'
+            include_large_datasets: Whether to include datasets marked as 'large'
         """
         all_scenarios = []
-        all_datasets = Datasets(inclue_large_datasets=inclue_large_datasets)
+        all_datasets = Datasets(include_large_datasets=include_large_datasets)
         for dataset in all_datasets:
             all_scenarios += generate_dataset_scenarios(dataset=dataset)
 
