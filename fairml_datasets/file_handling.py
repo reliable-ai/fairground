@@ -7,18 +7,17 @@ various formats into pandas DataFrames.
 """
 
 import tempfile
-import shutil
 from pathlib import Path
 from urllib.request import urlretrieve
 import zipfile
 import re
 import pandas as pd
 import numpy as np
-from typing import List, Tuple, Optional, Generator
+from typing import List, Tuple, Optional
 import logging
 from scipy.io.arff import loadarff
 
-ZipSearchResult = Tuple[zipfile.ZipFile, str]
+ZipSearchResult = Tuple[Path, str]
 
 logger = logging.getLogger(__name__)
 
@@ -283,8 +282,6 @@ def search_zip_archive(
     """
     logger.debug(f"Searching through zip archive ({zip_path, search_pattern}).")
 
-    zip_archive = zipfile.ZipFile(zip_path)
-
     # Use the correct search function
     if regex:
 
@@ -296,10 +293,11 @@ def search_zip_archive(
         def check(f):
             return search_pattern in f
 
-    files_in_zip = zip_archive.namelist()
-    matching_files_in_zip = [f for f in files_in_zip if check(f)]
+    with zipfile.ZipFile(zip_path, "r") as zip_archive:
+        files_in_zip = zip_archive.namelist()
+        matching_files_in_zip = [f for f in files_in_zip if check(f)]
 
-    return [(zip_archive, f) for f in matching_files_in_zip]
+        return [(zip_path, f) for f in matching_files_in_zip]
 
 
 def search_nested_zip_archives(
@@ -346,14 +344,16 @@ def extract_result(
     Returns:
         Path: Path to the extracted file
     """
-    zip_archive, matching_file = result
-    file_extracted = zip_archive.extract(matching_file, target_dir)
+    zip_path, matching_file = result
 
-    if target_file is not None:
-        # Ensure the extracted file ends up at "target_file"
-        if not target_file == file_extracted:
-            Path(file_extracted).rename(target_file)
-        return target_file
-    else:
-        # Return the original location of the extracted file
-        return Path(file_extracted)
+    with zipfile.ZipFile(zip_path, "r") as zip_archive:
+        file_extracted = zip_archive.extract(matching_file, target_dir)
+
+        if target_file is not None:
+            # Ensure the extracted file ends up at "target_file"
+            if not target_file == file_extracted:
+                Path(file_extracted).rename(target_file)
+            return target_file
+        else:
+            # Return the original location of the extracted file
+            return Path(file_extracted)
