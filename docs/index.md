@@ -74,6 +74,16 @@ python -m fairml_datasets export-datasets --stage prepared
 python -m fairml_datasets export-citations
 ```
 
+# Terms of Use
+
+FairGround is intended for fair ML research and promotes the ethical use of datasets. In line with this mission, we ask that you adhere to the following guidelines when using the package:
+
+- **Licenses.** While FairGround itself is licensed permissively, the datasets within the corpus differ in their respective licenses (see “License” section). It is important to examine and comply with the respective licenses of the different datasets.
+- **Privacy.** When using FairGround you agree to respect the data subjects’ privacy and not to try and re-identify any individuals within the datasets.
+- **Credit.** Accurately credit / cite the datasets that you use, especially so in cases where a license mandates this e.g. via the Creative Commons BY clause. Please also properly credit FairGround if you use the package or corpus.
+- **Problematic datasets.** FairGround explicitly adds warnings for all (to the best of our knowledge) datasets which have known issues. These datasets are largely included for comparability with prior work and we recommend against usage of these datasets unless it is important or required for a particular use case.
+- **Usage.** Datasets in this package contain known biases that may lead to discriminatory outcomes if used without care. FairGround is intended for research and educational use, particularly to study and compare fair ML algorithms. Do not develop or deploy real-world models using these datasets without appropriate fairness evaluations, bias mitigation, and ethical consideration.
+
 # License
 
 Due to restrictions in some of the third-party code we include, this work is licensed under two licenses.
